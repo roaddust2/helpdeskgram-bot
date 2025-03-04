@@ -197,7 +197,7 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext):
         cursor = conn.cursor()
         cursor.execute(
             "INSERT INTO issues (user_id, issue_key, created_at) VALUES (?, ?, ?)",
-            (callback.message.from_user.id, issue_key, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            (callback.from_user.id, issue_key, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         )
         conn.commit()
         conn.close()

@@ -11,7 +11,7 @@ async def get_jira_cookie():
 
     global SESSION_COOKIE
 
-    url = f"{JIRA_HOME}rest/auth/1/session"
+    url = f"{JIRA_HOME}/rest/auth/1/session"
     headers = {"Content-Type": "application/json"}
     json = {
         "username": JIRA_USERNAME,
@@ -38,7 +38,7 @@ async def create_jira_issue(issue_data: dict):
 
     global SESSION_COOKIE
 
-    url = f"{JIRA_HOME}rest/api/2/issue"
+    url = f"{JIRA_HOME}/rest/api/2/issue"
     headers = {'Content-Type': 'application/json'}
 
     if not SESSION_COOKIE:
@@ -80,7 +80,7 @@ async def upload_jira_issue_attachments(
 
     global SESSION_COOKIE
 
-    url = f"{JIRA_HOME}rest/api/2/issue/{issue_key}/attachments"
+    url = f"{JIRA_HOME}/rest/api/2/issue/{issue_key}/attachments"
     headers = {'X-Atlassian-Token': 'no-check'}
 
     if not SESSION_COOKIE:
