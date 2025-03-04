@@ -22,9 +22,6 @@ EXPOSE 8080
 # Create directory for SQLite file
 RUN mkdir -p /app/data
 
-# Volume for SQLite database
-VOLUME ["/app/data"]
-
 # Set environment variables
 ENV DB_PATH=/app/data/db.sqlite3
 
