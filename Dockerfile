@@ -26,4 +26,4 @@ RUN mkdir -p /app/data
 ENV DB_PATH=/app/data/db.sqlite3
 
 # Command to run the bot
-CMD ["make start"]
+CMD ["python3", "-m", "app.main"]
