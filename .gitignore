@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+
+# Django
+*.log
+db.sqlite3
+
+# Tests
+.coverage
+coverage.xml
+.pytest_cache/
+
+# IDE
+.vscode/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
