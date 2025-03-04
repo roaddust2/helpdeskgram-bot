@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "helpdeskgram-bot"
+version = "0.1.0"
+description = "Jira integrated telegram helpdesk."
+authors = ["roaddust2 <ma.khalitov@gmail.com>"]
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flake8 = "^7.1.2"
+aiogram = {extras = ["i18n"], version = "^3.18.0"}
+python-dotenv = "^1.0.1"
+pytest = "^8.3.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,127 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-03-02 11:03+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: app/main.py:60
+msgid "Greetings, {name}! And welcome to the helpdesk bot"
+msgstr ""
+
+#: app/main.py:72
+msgid "Process has been canceled."
+msgstr ""
+
+#: app/handlers/create_issue.py:45
+msgid "Choose category:"
+msgstr ""
+
+#: app/handlers/create_issue.py:59
+msgid "Thank you! Now describe your problem in details:"
+msgstr ""
+
+#: app/handlers/create_issue.py:67
+msgid "The category you entered is incorrect, please choose from the above:"
+msgstr ""
+
+#: app/handlers/create_issue.py:78
+msgid "Add up to 3 screenshots (optional):"
+msgstr ""
+
+#: app/handlers/create_issue.py:88
+msgid "You must provide a description:"
+msgstr ""
+
+#: app/handlers/create_issue.py:107
+msgid "Add another screenshot or press Skip"
+msgstr ""
+
+#: app/handlers/create_issue.py:112 app/handlers/create_issue.py:154
+msgid "You uploded maximum amount of screenshots. Please, share your contact."
+msgstr ""
+
+#: app/handlers/create_issue.py:121
+msgid "Please, share your contact"
+msgstr ""
+
+#: app/handlers/create_issue.py:135
+msgid ""
+"Submit your request\n"
+"\n"
+"Category: {category}\n"
+"Description: {description}\n"
+"Screenshots: {number} added\n"
+"Contact: {first_name} {phone_number}"
+msgstr ""
+
+#: app/handlers/create_issue.py:162
+msgid "Please, share your contact. Click the button below:"
+msgstr ""
+
+#: app/handlers/create_issue.py:182
+msgid ""
+"Your request #{issue_id} has been submited. We will help you as soon as "
+"possible!"
+msgstr ""
+
+#: app/handlers/create_issue.py:193
+msgid "Request canceled."
+msgstr ""
+
+#: app/keyboards/default.py:11
+msgid "Create new issue"
+msgstr ""
+
+#: app/keyboards/default.py:20 app/keyboards/default.py:44
+msgid "Cancel"
+msgstr ""
+
+#: app/keyboards/default.py:21
+msgid "Submit"
+msgstr ""
+
+#: app/keyboards/default.py:32
+msgid "Dealer's calculator"
+msgstr ""
+
+#: app/keyboards/default.py:33
+msgid "Client's calculator"
+msgstr ""
+
+#: app/keyboards/default.py:36
+msgid "Tracking"
+msgstr ""
+
+#: app/keyboards/default.py:37
+msgid "Translations"
+msgstr ""
+
+#: app/keyboards/default.py:40
+msgid "Mobile"
+msgstr ""
+
+#: app/keyboards/default.py:41
+msgid "Other"
+msgstr ""
+
+#: app/keyboards/default.py:52
+msgid "Share your contact"
+msgstr ""
+
+#: app/keyboards/default.py:60
+msgid "Skip"
+msgstr ""
+
