@@ -1,6 +1,7 @@
 import sqlite3
+import logging
 from datetime import datetime
-from app.api.jira_rest_api import create_jira_issue, upload_jira_issue_attachments
+from app.api.jira_rest_api import JiraFailure, create_jira_issue, upload_jira_issue_attachments
 from app.keyboards.default import (
     choose_category_ikb,
     create_issue_ikb,
@@ -16,6 +17,7 @@ from aiogram.utils.i18n import lazy_gettext as __
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
 from settings import JIRA_PROJECT, JIRA_ISSUE_TYPE, CATEGORIES
+
 
 
 router = Router()
@@ -214,8 +216,8 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext):
         await state.clear()
         await callback.answer()
 
-    except Exception as err:
-        print(f"Something went wrong! {err}")
+    except JiraFailure as err:
+        logging.error(f"Something went wrong! {err}")
 
 
 @router.callback_query(CreateIssue.confirmation, F.data == "cancel")

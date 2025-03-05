@@ -1,9 +1,17 @@
 import io
 import aiohttp
 from settings import JIRA_HOME, JIRA_USERNAME, JIRA_PASSWORD
+import logging
 
 
 SESSION_COOKIE = None
+
+
+class JiraFailure(Exception):
+    def __init__(self, message):
+        self.message = "Something went wrong with Jira integration!"
+    def __str__(self):
+        return self.message
 
 
 async def get_jira_cookie():
@@ -29,7 +37,7 @@ async def get_jira_cookie():
                 SESSION_COOKIE = data.get('session')
                 return data
             else:
-                print("Failed to get cookie", response.status, response.text)
+                logging.error(f"Failed to get cookie, {response.status} {response.text}")
                 return None
 
 
@@ -42,13 +50,13 @@ async def create_jira_issue(issue_data: dict):
     headers = {'Content-Type': 'application/json'}
 
     if not SESSION_COOKIE:
-        print("Session cookie is not set. Trying to authenticate...")
+        logging.info("Session cookie is not set. Trying to authenticate...")
         await get_jira_cookie()
 
     if SESSION_COOKIE:
         headers.update({'Cookie': f"{SESSION_COOKIE['name']}={SESSION_COOKIE['value']}"})
     else:
-        print("Authentication failed.")
+        logging.error("Authentication failed.")
         return None
 
     async with aiohttp.ClientSession() as session:
@@ -59,16 +67,16 @@ async def create_jira_issue(issue_data: dict):
         ) as response:
             if response.status == 201:
                 data = await response.json()
-                print(f"Issue created with key {data['key']}.")
+                logging.info(f"Issue created with key {data['key']}.")
                 return data['key']
             elif response.status == 401:
-                print("Unauthorized. Retry...")
+                logging.error("Unauthorized. Retry...")
                 return await create_jira_issue(issue_data)
             elif response.status == 400:
-                print(f"Input is invalid! {response.status} {await response.text()}")
+                logging.error(f"Input is invalid! {response.status} {await response.text()}")
             else:
-                print(f"Failed to create issue! {response.status} {await response.text()}")
-                return None
+                logging.error(f"Failed to create issue! {response.status} {await response.text()}")
+                raise JiraFailure
 
 
 async def upload_jira_issue_attachments(
@@ -84,13 +92,13 @@ async def upload_jira_issue_attachments(
     headers = {'X-Atlassian-Token': 'no-check'}
 
     if not SESSION_COOKIE:
-        print("Session cookie is not set. Trying to authenticate...")
+        logging.info("Session cookie is not set. Trying to authenticate...")
         await get_jira_cookie()
 
     if SESSION_COOKIE:
         headers.update({'Cookie': f"{SESSION_COOKIE['name']}={SESSION_COOKIE['value']}"})
     else:
-        print("Authentication failed.")
+        logging.error("Authentication failed.")
         return None
 
     for attempt in range(retries):
@@ -115,23 +123,23 @@ async def upload_jira_issue_attachments(
                 data=form
             ) as response:
                 if response.status == 200:
-                    print("Image/s successfully updated.")
+                    logging.info("Image/s successfully updated.")
                     return await response.json()
                 elif response.status == 401:
-                    print(f"Session expired. Refreshing session... (Attempt {attempt + 1}/{retries})")
+                    logging.info(f"Session expired. Refreshing session... (Attempt {attempt + 1}/{retries})")
                     await get_jira_cookie()
                     if SESSION_COOKIE:
                         headers.update({'Cookie': f"{SESSION_COOKIE['name']}={SESSION_COOKIE['value']}"})
                     else:
-                        print("Failed to refresh session.")
+                        logging.error("Failed to refresh session.")
                         return None
                 elif response.status == 403:
-                    print("Attachments are disabled or you don't have permission to add attachments to this issue.")
+                    logging.error("Attachments are disabled or you don't have permission to add attachments to this issue.")
                     return None
                 elif response.status == 404:
-                    print(f"Issue is not found, the user does not have permission to view it, or the attachments exceeds the max size.\n{await response.text()}")
-                else:
-                    print(f"Failed to upload attachment! {response.status} {await response.text()}")
+                    logging.error(f"Issue is not found, the user does not have permission to view it, or the attachments exceeds the max size.\n{await response.text()}")
                     return None
-    print("Max retries reached. Upload failed.")
-    return None
+                else:
+                    logging.error(f"Failed to upload attachment! {response.status} {await response.text()}")
+                    raise JiraFailure
+    raise JiraFailure
