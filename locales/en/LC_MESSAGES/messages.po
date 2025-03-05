@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-02 11:03+0300\n"
+"POT-Creation-Date: 2025-03-05 16:37+0300\n"
 "PO-Revision-Date: 2025-03-01 16:07+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,47 +18,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.1\n"
 
-#: app/main.py:60
-msgid "Greetings, {name}! And welcome to the helpdesk bot"
-msgstr "Greetings, {name}! And welcome to the helpdesk bot"
-
-#: app/main.py:72
-msgid "Process has been canceled."
-msgstr "Process has been canceled."
-
-#: app/handlers/create_issue.py:45
+#: app/handlers/create_issue.py:39
 msgid "Choose category:"
 msgstr "Choose category:"
 
-#: app/handlers/create_issue.py:59
+#: app/handlers/create_issue.py:53
 msgid "Thank you! Now describe your problem in details:"
 msgstr "Thank you! Now describe your problem in details:"
 
-#: app/handlers/create_issue.py:67
-msgid "The category you entered is incorrect, please choose from the above:"
-msgstr "The category you entered is incorrect, please choose from the above:"
+#: app/handlers/create_issue.py:71
+msgid "The category you entered is incorrect, please press a button below:"
+msgstr "The category you entered is incorrect, please press a button below:"
 
-#: app/handlers/create_issue.py:78
+#: app/handlers/create_issue.py:83
 msgid "Add up to 3 screenshots (optional):"
 msgstr "Add up to 3 screenshots (optional)::"
 
-#: app/handlers/create_issue.py:88
+#: app/handlers/create_issue.py:93
 msgid "You must provide a description:"
 msgstr "You must provide a description:"
 
-#: app/handlers/create_issue.py:107
+#: app/handlers/create_issue.py:112
 msgid "Add another screenshot or press Skip"
 msgstr "Add another screenshot or press Skip"
 
-#: app/handlers/create_issue.py:112 app/handlers/create_issue.py:154
+#: app/handlers/create_issue.py:117
 msgid "You uploaded maximum amount of screenshots. Please, share your contact."
 msgstr "You uploaded maximum amount of screenshots. Please, share your contact."
 
-#: app/handlers/create_issue.py:121
+#: app/handlers/create_issue.py:126
 msgid "Please, share your contact"
 msgstr "Please, share your contact"
 
-#: app/handlers/create_issue.py:135
+#: app/handlers/create_issue.py:140
 #, fuzzy
 msgid ""
 "Submit your request\n"
@@ -75,88 +67,96 @@ msgstr ""
 "<b>Screenshots</b>: {number} added\n"
 "<b>Contact</b>: {first_name}, {phone_number}"
 
-#: app/handlers/create_issue.py:162
+#: app/handlers/create_issue.py:160
+#, fuzzy
+msgid "You uploded maximum amount of screenshots. Please, share your contact."
+msgstr "You uploaded maximum amount of screenshots. Please, share your contact."
+
+#: app/handlers/create_issue.py:168
 msgid "Please, share your contact. Click the button below:"
 msgstr "Please, share your contact. Click the button below:"
 
-#: app/handlers/create_issue.py:182
+#: app/handlers/create_issue.py:208
+#, fuzzy
 msgid ""
-"Your request #{issue_id} has been submited. We will help you as soon as "
+"Your request #{issue_key} has been submited. We will help you as soon as "
 "possible!"
 msgstr ""
 "Your request #{issue_id} has been submited. We will help you as soon as "
 "possible!"
 
-#: app/handlers/create_issue.py:193
+#: app/handlers/create_issue.py:222
 msgid "Request canceled."
 msgstr "Request canceled."
 
-#: app/keyboards/default.py:11
+#: app/handlers/start.py:18
+msgid "Greetings, {name}! And welcome to the helpdesk bot"
+msgstr "Greetings, {name}! And welcome to the helpdesk bot"
+
+#: app/handlers/start.py:31 app/handlers/start.py:42
+msgid "Process has been canceled."
+msgstr "Process has been canceled."
+
+#: app/keyboards/default.py:10
 msgid "Create new issue"
 msgstr "Create new issue"
 
-#: app/keyboards/default.py:20 app/keyboards/default.py:44
+#: app/keyboards/default.py:19 app/keyboards/default.py:37
 msgid "Cancel"
 msgstr "Cancel"
 
-#: app/keyboards/default.py:21
+#: app/keyboards/default.py:20
 #, fuzzy
 msgid "Submit"
 msgstr "submit"
 
-#: app/keyboards/default.py:32
-msgid "Dealer's calculator"
-msgstr "Dealer's calculator"
-
-#: app/keyboards/default.py:33
-msgid "Client's calculator"
-msgstr "Client's calculator"
-
-#: app/keyboards/default.py:36
-msgid "Tracking"
-msgstr "Tracking"
-
-#: app/keyboards/default.py:37
-msgid "Translations"
-msgstr "Translations"
-
-#: app/keyboards/default.py:40
-msgid "Mobile"
-msgstr "Mobile"
-
-#: app/keyboards/default.py:41
-msgid "Other"
-msgstr "Other"
-
-#: app/keyboards/default.py:52
+#: app/keyboards/default.py:50
 msgid "Share your contact"
 msgstr "Share your contact"
 
-#: app/keyboards/default.py:60
+#: app/keyboards/default.py:58
 msgid "Skip"
 msgstr "Skip"
 
-msgid "skip"
-msgstr "skip"
+#~ msgid "skip"
+#~ msgstr "skip"
 
-msgid "cancel"
-msgstr "cancel"
+#~ msgid "cancel"
+#~ msgstr "cancel"
 
-msgid "dealer's calculator"
-msgstr "dealer's calculator"
+#~ msgid "dealer's calculator"
+#~ msgstr "dealer's calculator"
 
-msgid "client's calculator"
-msgstr "client's calculator"
+#~ msgid "client's calculator"
+#~ msgstr "client's calculator"
 
-msgid "tracking"
-msgstr "tracking"
+#~ msgid "tracking"
+#~ msgstr "tracking"
 
-msgid "translations"
-msgstr "translations"
+#~ msgid "translations"
+#~ msgstr "translations"
 
-msgid "mobile"
-msgstr "mobile"
+#~ msgid "mobile"
+#~ msgstr "mobile"
 
-msgid "other"
-msgstr "other"
+#~ msgid "other"
+#~ msgstr "other"
+
+#~ msgid "Dealer's calculator"
+#~ msgstr "Dealer's calculator"
+
+#~ msgid "Client's calculator"
+#~ msgstr "Client's calculator"
+
+#~ msgid "Tracking"
+#~ msgstr "Tracking"
+
+#~ msgid "Translations"
+#~ msgstr "Translations"
+
+#~ msgid "Mobile"
+#~ msgstr "Mobile"
+
+#~ msgid "Other"
+#~ msgstr "Other"
 

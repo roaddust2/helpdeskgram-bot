@@ -2,7 +2,7 @@ import sqlite3
 from datetime import datetime
 from app.api.jira_rest_api import create_jira_issue, upload_jira_issue_attachments
 from app.keyboards.default import (
-    choose_category_kb,
+    choose_category_ikb,
     create_issue_ikb,
     share_contact_kb,
     confirm_issue_ikb,
@@ -15,7 +15,7 @@ from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
-from settings import JIRA_PROJECT, JIRA_ISSUE_TYPE
+from settings import JIRA_PROJECT, JIRA_ISSUE_TYPE, CATEGORIES
 
 
 router = Router()
@@ -29,46 +29,49 @@ class CreateIssue(StatesGroup):
     confirmation = State()
 
 
-available_categories = [
-    __("dealer's calculator"),
-    __("client's calculator"),
-    __("tracking"),
-    __("translations"),
-    __("mobile"),
-    __("other")
-]
-
-
 # Choose category
 
 @router.callback_query(StateFilter(None), F.data == "create_new_issue")
 async def choose_category(callback: types.CallbackQuery, state: FSMContext):
-    await callback.message.answer(
+
+    await callback.message.delete()
+    message = await callback.message.answer(
         text=_("Choose category:"),
-        reply_markup=choose_category_kb()
+        reply_markup=choose_category_ikb(CATEGORIES)
     )
+    await state.update_data(category_message_id=message.message_id)
     await state.set_state(CreateIssue.category)
     await callback.answer()
 
 
-@router.message(
-    CreateIssue.category,
-    F.text.lower().in_(available_categories)
-)
-async def category_chosen(message: types.Message, state: FSMContext):
-    await state.update_data(category=message.text)
-    await message.answer(
+@router.callback_query(CreateIssue.category, F.data.in_({callback for _, callback in CATEGORIES}))
+async def category_chosen(callback: types.CallbackQuery, state: FSMContext):
+    await callback.message.delete()
+    await state.update_data(category_message_id=None)
+    await state.update_data(category=callback.data)
+    await callback.message.answer(
         text=_("Thank you! Now describe your problem in details:")
     )
     await state.set_state(CreateIssue.description)
+    await callback.answer()
 
 
 @router.message(CreateIssue.category)
-async def category_chosen_incorrectly(message: types.Message):
-    await message.answer(
-        text=_("The category you entered is incorrect, please choose from the above:"),
-        reply_markup=choose_category_kb()
+async def category_chosen_incorrectly(message: types.Message, state: FSMContext):
+    data = await state.get_data()
+    message_id = data.get("category_message_id")
+
+    if message_id:
+        try:
+            await message.bot.delete_message(chat_id=message.chat.id, message_id=message_id)
+        except Exception:
+            pass
+
+    new_message = await message.answer(
+        text=_("The category you entered is incorrect, please press a button below:"),
+        reply_markup=choose_category_ikb(CATEGORIES)
     )
+    await state.update_data(category_message_id=new_message.message_id)
 
 
 # Input description
@@ -87,8 +90,7 @@ async def input_description(message: types.Message, state: FSMContext):
 @router.message(CreateIssue.description)
 async def description_inputed_incorrectly(message: types.Message):
     await message.answer(
-        text=_("You must provide a description:"),
-        reply_markup=choose_category_kb()
+        text=_("You must provide a description:")
     )
 
 

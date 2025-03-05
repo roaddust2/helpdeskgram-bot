@@ -23,7 +23,6 @@ async def cmd_start(message: types.Message) -> None:
 
 
 @router.message(Command("cancel"))
-@router.message(F.text.lower() == __("cancel"))
 async def cmd_cancel(message: types.Message, state: FSMContext):
     """Anytime cancel and clear state function"""
 
@@ -32,3 +31,15 @@ async def cmd_cancel(message: types.Message, state: FSMContext):
         _("Process has been canceled."),
         reply_markup=create_issue_ikb()
     )
+
+@router.callback_query(F.data == "cancel")
+async def data_cancel(callback: types.CallbackQuery, state: FSMContext):
+    """Cancel and clear state function from inline kb"""
+
+    await callback.message.delete()
+    await state.clear()
+    await callback.message.answer(
+        _("Process has been canceled."),
+        reply_markup=create_issue_ikb()
+    )
+    callback.answer()

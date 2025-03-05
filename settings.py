@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
+from aiogram.utils.i18n import gettext as _
 
 
 load_dotenv()
@@ -25,3 +26,16 @@ WEB_SERVER_HOST = "127.0.0.1"
 WEB_SERVER_PORT = 8080
 WEBHOOK_PATH = "/webhook"
 JIRA_WEBHOOK_PATH = "/jira/{issue_key}"
+
+
+# Categories
+# When creating issue user should choose a category
+
+CATEGORIES = [
+        ("Dealer's calculator", "dealer_calc"),
+        ("Client's calculator", "client_calc"),
+        ("Tracking", "tracking"),
+        ("Translations", "translations"),
+        ("Mobile", "mobile"),
+        ("Other", "other")
+    ]
