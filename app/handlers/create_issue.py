@@ -6,7 +6,7 @@ from app.keyboards.default import (
     create_issue_ikb,
     share_contact_kb,
     confirm_issue_ikb,
-    skip_kb
+    skip_ikb
 )
 from aiogram import Bot, Router, F
 from aiogram import types
@@ -81,7 +81,7 @@ async def input_description(message: types.Message, state: FSMContext):
     await state.update_data(description=message.text)
     await message.answer(
         text=_("Add up to 3 screenshots (optional):"),
-        reply_markup=skip_kb()
+        reply_markup=skip_ikb()
     )
     await state.update_data(screenshots=[])
     await state.set_state(CreateIssue.screenshots)
@@ -110,7 +110,7 @@ async def add_screenshots(message: types.Message, bot: Bot, state: FSMContext):
         if len(screenshots) < 3:
             await message.answer(
                 text=_("Add another screenshot or press Skip"),
-                reply_markup=skip_kb()
+                reply_markup=skip_ikb()
             )
         else:
             await message.answer(
@@ -120,13 +120,14 @@ async def add_screenshots(message: types.Message, bot: Bot, state: FSMContext):
             await state.set_state(CreateIssue.contact)
 
 
-@router.message(CreateIssue.screenshots, F.text.lower() == __("skip"))
-async def skip_screenshots(message: types.Message, state: FSMContext):
-    await message.answer(
+@router.callback_query(CreateIssue.screenshots, F.data == "skip")
+async def skip_screenshots(callback: types.CallbackQuery, state: FSMContext):
+    await callback.message.answer(
         text=_("Please, share your contact"),
         reply_markup=share_contact_kb()
     )
     await state.set_state(CreateIssue.contact)
+    await callback.answer()
 
 
 # Share contact
@@ -135,6 +136,7 @@ async def skip_screenshots(message: types.Message, state: FSMContext):
 async def confirm_request(message: types.Message, state: FSMContext):
     await state.update_data(contact=message.contact)
     issue = await state.get_data()
+    category = {category for category, data in CATEGORIES if issue.get('category') == data}
     screenshots = issue.get('screenshots')
     await message.answer(
         text=_(
@@ -143,7 +145,7 @@ async def confirm_request(message: types.Message, state: FSMContext):
             "Description: {description}\n"
             "Screenshots: {number} added\n"
             "Contact: {first_name} {phone_number}").format(
-                category=issue.get('category'),
+                category=category[0],
                 description=issue.get('description'),
                 number=len(screenshots) if screenshots else 0,
                 first_name=issue.get('contact').first_name,
@@ -188,7 +190,7 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext):
                 "customfield_10108": "YOK-584",
                 "summary": f"{' '.join(issue.get('description').split()[:5])}...",
                 "description": issue.get('description'),
-                "labels": [issue.get('category').replace(" ", "_"), issue.get('contact').first_name, issue.get('contact').phone_number],
+                "labels": [issue.get('category'), issue.get('contact').first_name, issue.get('contact').phone_number],
             }
         )
 

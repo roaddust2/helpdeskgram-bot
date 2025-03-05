@@ -51,9 +51,8 @@ def share_contact_kb() -> ReplyKeyboardMarkup:
     return builder.as_markup(resize_keyboard=True, one_time_keyboard=True)
 
 
-def skip_kb() -> ReplyKeyboardMarkup:
-    builder = ReplyKeyboardBuilder()
-    builder.row(
-        types.KeyboardButton(text=_("Skip"))
+def skip_ikb() -> InlineKeyboardBuilder:
+    keyboard = types.InlineKeyboardMarkup(
+        inline_keyboard=[[types.InlineKeyboardButton(text=_("Skip"), callback_data="skip"),]]
     )
-    return builder.as_markup(resize_keyboard=True, one_time_keyboard=True)
+    return keyboard

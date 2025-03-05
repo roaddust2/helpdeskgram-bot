@@ -151,21 +151,21 @@ msgstr "Пропустить"
 #~ msgid "other"
 #~ msgstr "другое"
 
-#~ msgid "Dealer's calculator"
-#~ msgstr "Калькулятор дилера"
+msgid "Dealer's calculator"
+msgstr "Калькулятор дилера"
 
-#~ msgid "Client's calculator"
-#~ msgstr "Калькулятор клиента"
+msgid "Client's calculator"
+msgstr "Калькулятор клиента"
 
-#~ msgid "Tracking"
-#~ msgstr "Трекинг"
+msgid "Tracking"
+msgstr "Трекинг"
 
-#~ msgid "Translations"
-#~ msgstr "Переводы"
+msgid "Translations"
+msgstr "Переводы"
 
-#~ msgid "Mobile"
-#~ msgstr "Мобильное приложение"
+msgid "Mobile"
+msgstr "Мобильное приложение"
 
-#~ msgid "Other"
-#~ msgstr "Другое"
+msgid "Other"
+msgstr "Другое"
 
