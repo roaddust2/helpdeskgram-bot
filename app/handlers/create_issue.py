@@ -138,7 +138,7 @@ async def skip_screenshots(callback: types.CallbackQuery, state: FSMContext):
 async def confirm_request(message: types.Message, state: FSMContext):
     await state.update_data(contact=message.contact)
     issue = await state.get_data()
-    category = {category for category, data in CATEGORIES if issue.get('category') == data}
+    category = [category for category, data in CATEGORIES if issue.get('category') == data]
     screenshots = issue.get('screenshots')
     await message.answer(
         text=_(
