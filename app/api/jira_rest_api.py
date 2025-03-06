@@ -146,3 +146,40 @@ async def upload_jira_issue_attachments(
                     logging.error(f"Failed to upload attachment! {response.status} {await response.text()}")
                     raise JiraFailure
     raise JiraFailure
+
+
+async def get_jira_issue_last_comment(issue_key: str) -> str:
+    """Function that gets last issue comment by issue key"""
+
+    global SESSION_COOKIE
+
+    url = f"{JIRA_HOME}/rest/api/2/issue/{issue_key}/comment"
+    headers = dict()
+
+    if not SESSION_COOKIE:
+        logging.info("Session cookie is not set. Trying to authenticate...")
+        await get_jira_cookie()
+
+    if SESSION_COOKIE:
+        headers.update({'Cookie': f"{SESSION_COOKIE['name']}={SESSION_COOKIE['value']}"})
+    else:
+        logging.error("Authentication failed.")
+        return None
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url=url, headers=headers) as response:
+            if response.status == 200:
+                data = await response.json()
+                if data["comments"]:
+                    last_comment = max(data["comments"], key=lambda c: c["created"])["body"]
+                    logging.info(f"Get comments for {issue_key}.")
+                    return last_comment
+                else:
+                    logging.info(f"No comments for {issue_key}.")
+                    return None
+            elif response.status == 404:
+                logging.error("Issue key does not have exist or you don'thave permission to view issue")
+                return None
+            else:
+                logging.error(f"Failed to get comments {response.status} {await response.text()}")
+                raise JiraFailure

@@ -2,6 +2,7 @@ import logging
 import sqlite3
 from settings import bot, JiraStatuses, i18n
 from aiohttp import web
+from app.api.jira_rest_api import get_jira_issue_last_comment
 
 
 # TODO: Needs refactoring, i18n implementation is a joke here
@@ -45,9 +46,14 @@ async def jira_issue_update(request: web.Request):
                 logging.info("Issue status changed.")
                 return web.json_response({"status": "ok"})
             case JiraStatuses.DONE:
+                last_comment = await get_jira_issue_last_comment(issue_key)
                 await bot.send_message(
                     chat_id=user_id,
                     text=i18n.gettext("Your issue <code>{issue_key}</code> is done!", locale=locale).format(issue_key=issue_key)
+                )
+                await bot.send_message(
+                    chat_id=user_id,
+                    text=last_comment
                 )
                 cursor.execute("UPDATE issues SET status = ? WHERE issue_key = ?", ("done", issue_key))
                 conn.commit()
