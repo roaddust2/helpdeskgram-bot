@@ -1,13 +1,12 @@
-from settings import DEFAULT_LOCALE, DEBUG
-from settings import bot
-from settings import BASE_WEBHOOK_URL, WEB_SERVER_HOST, WEB_SERVER_PORT, WEBHOOK_PATH, JIRA_WEBHOOK_PATH
-from app.utils import WORKDIR
 import logging
 import sqlite3
+from settings import bot, i18n
+from settings import DEFAULT_LOCALE, DEBUG
+from settings import BASE_WEBHOOK_URL, WEB_SERVER_HOST, WEB_SERVER_PORT, WEBHOOK_PATH, JIRA_WEBHOOK_PATH
 from app.handlers import create_issue, start
 from app.api.jira_route_handler import jira_issue_update
 from aiogram import Bot, Dispatcher
-from aiogram.utils.i18n import I18n, ConstI18nMiddleware, SimpleI18nMiddleware
+from aiogram.utils.i18n import ConstI18nMiddleware, SimpleI18nMiddleware
 from aiohttp import web
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 
@@ -24,13 +23,13 @@ async def on_shutdown(bot: Bot) -> None:
 
 
 def main() -> None:
+    """Main function"""
 
     dp = Dispatcher()
 
-    # i18n Internationalization settings
+    # i18n Internationalization settings (i18n instance is in settings)
     if DEFAULT_LOCALE:
         # TODO: Use rewrited I18nMiddleware instead, SimpleI18nMiddleware is buggy
-        i18n = I18n(path=WORKDIR / 'locales', default_locale=DEFAULT_LOCALE, domain="messages")
         dp.update.middleware(SimpleI18nMiddleware(i18n=i18n))
     else:
         dp.update.middleware(ConstI18nMiddleware(locale="en"))
@@ -59,6 +58,8 @@ def main() -> None:
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER,
         issue_key TEXT,
+        status TEXT,
+        locale TEXT,
         created_at TEXT NOT NULL
     )''')
     conn.commit()

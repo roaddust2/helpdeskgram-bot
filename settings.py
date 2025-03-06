@@ -2,8 +2,8 @@ import os
 from dotenv import load_dotenv
 from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
-from aiogram.utils.i18n import gettext as _
-
+from app.utils import WORKDIR
+from aiogram.utils.i18n import I18n
 
 load_dotenv()
 
@@ -28,14 +28,25 @@ WEBHOOK_PATH = "/webhook"
 JIRA_WEBHOOK_PATH = "/jira/{issue_key}"
 
 
+# I18n
+i18n = I18n(path=WORKDIR / 'locales', default_locale=DEFAULT_LOCALE, domain="messages")
+
 # Categories
-# When creating issue user should choose a category
+# When creating issue user should choose a category, rewrite if needed
 
 CATEGORIES = [
-        ("Dealer's calculator", "dealer_calc"),
-        ("Client's calculator", "client_calc"),
-        ("Tracking", "tracking"),
-        ("Translations", "translations"),
-        ("Mobile", "mobile"),
-        ("Other", "other")
-    ]
+    ("Dealer's calculator", "dealer_calc"),
+    ("Client's calculator", "client_calc"),
+    ("Tracking", "tracking"),
+    ("Translations", "translations"),
+    ("Mobile", "mobile"),
+    ("Other", "other")
+]
+
+
+# Jira statuses, checks when webhook comes
+
+class JiraStatuses():
+    APPOINTED = "Selected for Development"
+    IN_PROGRESS = "In Progress"
+    DONE = "Done"

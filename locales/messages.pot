@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-05 16:37+0300\n"
+"POT-Creation-Date: 2025-03-06 12:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,39 +17,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.1\n"
 
-#: app/handlers/create_issue.py:39
+#: app/api/jira_route_handler.py:27
+msgid "Your issue <code>{issue_key}</code> appointed to work."
+msgstr ""
+
+#: app/api/jira_route_handler.py:33
+msgid "Your issue <code>{issue_key}</code> is currently in progress."
+msgstr ""
+
+#: app/api/jira_route_handler.py:39
+msgid "Your issue <code>{issue_key}</code> is done!"
+msgstr ""
+
+#: app/handlers/create_issue.py:42
 msgid "Choose category:"
 msgstr ""
 
-#: app/handlers/create_issue.py:53
+#: app/handlers/create_issue.py:56
 msgid "Thank you! Now describe your problem in details:"
 msgstr ""
 
-#: app/handlers/create_issue.py:71
+#: app/handlers/create_issue.py:74
 msgid "The category you entered is incorrect, please press a button below:"
 msgstr ""
 
-#: app/handlers/create_issue.py:83
+#: app/handlers/create_issue.py:86
 msgid "Add up to 3 screenshots (optional):"
 msgstr ""
 
-#: app/handlers/create_issue.py:93
+#: app/handlers/create_issue.py:96
 msgid "You must provide a description:"
 msgstr ""
 
-#: app/handlers/create_issue.py:112
-msgid "Add another screenshot or press Skip"
+#: app/handlers/create_issue.py:115
+msgid "{} of 3 added. Add another screenshot or press Skip"
 msgstr ""
 
-#: app/handlers/create_issue.py:117
+#: app/handlers/create_issue.py:120
 msgid "You uploaded maximum amount of screenshots. Please, share your contact."
 msgstr ""
 
-#: app/handlers/create_issue.py:126
+#: app/handlers/create_issue.py:129
 msgid "Please, share your contact"
 msgstr ""
 
-#: app/handlers/create_issue.py:140
+#: app/handlers/create_issue.py:145
 msgid ""
 "Submit your request\n"
 "\n"
@@ -59,21 +71,25 @@ msgid ""
 "Contact: {first_name} {phone_number}"
 msgstr ""
 
-#: app/handlers/create_issue.py:160
+#: app/handlers/create_issue.py:165
 msgid "You uploded maximum amount of screenshots. Please, share your contact."
 msgstr ""
 
-#: app/handlers/create_issue.py:168
+#: app/handlers/create_issue.py:173
 msgid "Please, share your contact. Click the button below:"
 msgstr ""
 
-#: app/handlers/create_issue.py:208
+#: app/handlers/create_issue.py:213
 msgid ""
-"Your request #{issue_key} has been submited. We will help you as soon as "
-"possible!"
+"Your request <code>{issue_key}</code> has been submited. We will help you"
+" as soon as possible!"
 msgstr ""
 
-#: app/handlers/create_issue.py:222
+#: app/handlers/create_issue.py:224
+msgid "Something went wrong, try again after few minutes!"
+msgstr ""
+
+#: app/handlers/create_issue.py:232
 msgid "Request canceled."
 msgstr ""
 
@@ -89,7 +105,7 @@ msgstr ""
 msgid "Create new issue"
 msgstr ""
 
-#: app/keyboards/default.py:19 app/keyboards/default.py:37
+#: app/keyboards/default.py:19 app/keyboards/default.py:41
 msgid "Cancel"
 msgstr ""
 
@@ -97,11 +113,11 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: app/keyboards/default.py:50
+#: app/keyboards/default.py:49
 msgid "Share your contact"
 msgstr ""
 
-#: app/keyboards/default.py:58
+#: app/keyboards/default.py:56
 msgid "Skip"
 msgstr ""
 

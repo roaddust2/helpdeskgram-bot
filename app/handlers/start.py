@@ -4,7 +4,6 @@ from app.keyboards.default import create_issue_ikb
 from aiogram import types, html, F
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.i18n import gettext as _
-from aiogram.utils.i18n import lazy_gettext as __
 
 
 router = Router()
@@ -31,6 +30,7 @@ async def cmd_cancel(message: types.Message, state: FSMContext):
         _("Process has been canceled."),
         reply_markup=create_issue_ikb()
     )
+
 
 @router.callback_query(F.data == "cancel")
 async def data_cancel(callback: types.CallbackQuery, state: FSMContext):

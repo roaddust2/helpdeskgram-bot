@@ -38,8 +38,8 @@ def choose_category_ikb(buttons: list[tuple[str, str]]) -> InlineKeyboardMarkup:
                 InlineKeyboardButton(text=_(buttons[i][0]), callback_data=buttons[i][1])
             )
     builder.row(
-                InlineKeyboardButton(text=_("Cancel"), callback_data="cancel")
-            )
+        InlineKeyboardButton(text=_("Cancel"), callback_data="cancel")
+    )
     return builder.as_markup()
 
 

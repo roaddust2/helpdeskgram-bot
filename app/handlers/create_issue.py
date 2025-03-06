@@ -1,5 +1,5 @@
-import sqlite3
 import logging
+import sqlite3
 from datetime import datetime
 from app.api.jira_rest_api import JiraFailure, create_jira_issue, upload_jira_issue_attachments
 from app.keyboards.default import (
@@ -14,11 +14,10 @@ from aiogram import types
 from aiogram.filters import StateFilter
 from aiogram.utils.chat_action import ChatActionSender
 from aiogram.utils.i18n import gettext as _
-from aiogram.utils.i18n import lazy_gettext as __
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
 from settings import JIRA_PROJECT, JIRA_ISSUE_TYPE, CATEGORIES
-
+from aiogram.utils.i18n import I18n
 
 
 router = Router()
@@ -33,7 +32,6 @@ class CreateIssue(StatesGroup):
 
 
 # Choose category
-
 @router.callback_query(StateFilter(None), F.data == "create_new_issue")
 async def choose_category(callback: types.CallbackQuery, state: FSMContext):
 
@@ -78,7 +76,6 @@ async def category_chosen_incorrectly(message: types.Message, state: FSMContext)
 
 
 # Input description
-
 @router.message(CreateIssue.description, F.text)
 async def input_description(message: types.Message, state: FSMContext):
     await state.update_data(description=message.text)
@@ -98,7 +95,6 @@ async def description_inputed_incorrectly(message: types.Message):
 
 
 # Add screenshots
-
 @router.message(CreateIssue.screenshots, F.photo)
 async def add_screenshots(message: types.Message, bot: Bot, state: FSMContext):
     issue = await state.get_data()
@@ -112,7 +108,7 @@ async def add_screenshots(message: types.Message, bot: Bot, state: FSMContext):
 
         if len(screenshots) < 3:
             await message.answer(
-                text=_("Add another screenshot or press Skip"),
+                text=_("{} of 3 added. Add another screenshot or press Skip").format(len(screenshots)),
                 reply_markup=skip_ikb()
             )
         else:
@@ -134,7 +130,6 @@ async def skip_screenshots(callback: types.CallbackQuery, state: FSMContext):
 
 
 # Share contact
-
 @router.message(CreateIssue.contact, F.contact)
 async def confirm_request(message: types.Message, state: FSMContext):
     await state.update_data(contact=message.contact)
@@ -148,7 +143,7 @@ async def confirm_request(message: types.Message, state: FSMContext):
             "Description: {description}\n"
             "Screenshots: {number} added\n"
             "Contact: {first_name} {phone_number}").format(
-                category=category[0],
+                category=_(category[0]),
                 description=issue.get('description'),
                 number=len(screenshots) if screenshots else 0,
                 first_name=issue.get('contact').first_name,
@@ -176,10 +171,11 @@ async def add_screenshots_exceeded_text(message: types.Message, state: FSMContex
 
 
 @router.callback_query(CreateIssue.confirmation, F.data == "submit")
-async def process_confirm(callback: types.CallbackQuery, state: FSMContext):
-
+async def process_confirm(callback: types.CallbackQuery, state: FSMContext, i18n: I18n):
+    await callback.message.delete()
     issue = await state.get_data()
     screenshots = issue.get('screenshots')
+    locale = i18n.ctx_locale.get()
     async with ChatActionSender.typing(bot=callback.bot, chat_id=callback.message.chat.id):
         try:
             issue_key = await create_jira_issue(
@@ -196,21 +192,21 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext):
                     "labels": [issue.get('category'), issue.get('contact').first_name, issue.get('contact').phone_number],
                 }
             )
-
-            await upload_jira_issue_attachments(issue_key, screenshots)
+            if screenshots:
+                await upload_jira_issue_attachments(issue_key, screenshots)
 
             DB_FILE = "db.sqlite3"
             conn = sqlite3.connect(DB_FILE)
             cursor = conn.cursor()
             cursor.execute(
-                "INSERT INTO issues (user_id, issue_key, created_at) VALUES (?, ?, ?)",
-                (callback.from_user.id, issue_key, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                "INSERT INTO issues (user_id, issue_key, status, locale, created_at) VALUES (?, ?, ?, ?, ?)",
+                (callback.from_user.id, issue_key, "new", locale, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             )
             conn.commit()
             conn.close()
 
             await callback.message.answer(
-                text=_("Your request #{issue_key} has been submited. We will help you as soon as possible!").format(
+                text=_("Your request <code>{issue_key}</code> has been submited. We will help you as soon as possible!").format(
                     issue_key=issue_key
                 ),
                 reply_markup=create_issue_ikb()
@@ -219,7 +215,11 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext):
             await callback.answer()
 
         except JiraFailure as err:
-            logging.error(f"Something went wrong! {err}")
+            logging.error(err)
+            await callback.message.answer(
+                text=_("Something went wrong, try again after few minutes!")
+            )
+            await callback.answer()
 
 
 @router.callback_query(CreateIssue.confirmation, F.data == "cancel")
