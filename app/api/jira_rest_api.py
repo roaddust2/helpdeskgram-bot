@@ -8,7 +8,7 @@ SESSION_COOKIE = None
 
 
 class JiraFailure(Exception):
-    def __init__(self, message):
+    def __init__(self):
         self.message = "Something went wrong with Jira integration!"
     def __str__(self):
         return self.message

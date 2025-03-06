@@ -12,6 +12,7 @@ from app.keyboards.default import (
 from aiogram import Bot, Router, F
 from aiogram import types
 from aiogram.filters import StateFilter
+from aiogram.utils.chat_action import ChatActionSender
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
 from aiogram.fsm.state import StatesGroup, State
@@ -179,45 +180,46 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext):
 
     issue = await state.get_data()
     screenshots = issue.get('screenshots')
-
-    try:
-        issue_key = await create_jira_issue(
-            {
-                "project": {
-                    "id": JIRA_PROJECT
-                },
-                "issuetype": {
-                    "id": JIRA_ISSUE_TYPE
-                },
-                "customfield_10108": "YOK-584",
-                "summary": f"{' '.join(issue.get('description').split()[:5])}...",
-                "description": issue.get('description'),
-                "labels": [issue.get('category'), issue.get('contact').first_name, issue.get('contact').phone_number],
-            }
-        )
-
-        await upload_jira_issue_attachments(issue_key, screenshots)
-
-        DB_FILE = "db.sqlite3"
-        conn = sqlite3.connect(DB_FILE)
-        cursor = conn.cursor()
-        cursor.execute(
-            "INSERT INTO issues (user_id, issue_key, created_at) VALUES (?, ?, ?)",
-            (callback.from_user.id, issue_key, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        )
-        conn.commit()
-        conn.close()
-
-        await callback.message.answer(
-            text=_("Your request #{issue_key} has been submited. We will help you as soon as possible!").format(
-                issue_key=issue_key
+    async with ChatActionSender.typing(bot=callback.bot, chat_id=callback.message.chat.id):
+        try:
+            issue_key = await create_jira_issue(
+                {
+                    "project": {
+                        "id": JIRA_PROJECT
+                    },
+                    "issuetype": {
+                        "id": JIRA_ISSUE_TYPE
+                    },
+                    "customfield_10108": "YOK-584",
+                    "summary": f"{' '.join(issue.get('description').split()[:5])}...",
+                    "description": issue.get('description'),
+                    "labels": [issue.get('category'), issue.get('contact').first_name, issue.get('contact').phone_number],
+                }
             )
-        )
-        await state.clear()
-        await callback.answer()
 
-    except JiraFailure as err:
-        logging.error(f"Something went wrong! {err}")
+            await upload_jira_issue_attachments(issue_key, screenshots)
+
+            DB_FILE = "db.sqlite3"
+            conn = sqlite3.connect(DB_FILE)
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO issues (user_id, issue_key, created_at) VALUES (?, ?, ?)",
+                (callback.from_user.id, issue_key, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            )
+            conn.commit()
+            conn.close()
+
+            await callback.message.answer(
+                text=_("Your request #{issue_key} has been submited. We will help you as soon as possible!").format(
+                    issue_key=issue_key
+                ),
+                reply_markup=create_issue_ikb()
+            )
+            await state.clear()
+            await callback.answer()
+
+        except JiraFailure as err:
+            logging.error(f"Something went wrong! {err}")
 
 
 @router.callback_query(CreateIssue.confirmation, F.data == "cancel")
