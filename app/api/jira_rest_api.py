@@ -1,3 +1,4 @@
+# TODO: Needs refactoring
 import io
 import aiohttp
 from settings import JIRA_HOME, JIRA_USERNAME, JIRA_PASSWORD
@@ -81,7 +82,6 @@ async def create_jira_issue(issue_data: dict):
                 raise JiraFailure
 
 
-# TODO: Needs refactoring
 async def upload_jira_issue_attachments(
     issue_key: str,
     attachments: list[tuple[io.BytesIO, str]],
@@ -165,7 +165,7 @@ async def get_jira_issue_last_comment(issue_key: str) -> str:
     else:
         logging.error("Authentication failed.")
         return None
-    
+
     async with aiohttp.ClientSession() as session:
         async with session.get(url=url, headers=headers) as response:
             if response.status == 200:

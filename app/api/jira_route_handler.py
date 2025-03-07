@@ -11,8 +11,9 @@ async def jira_issue_update(request: web.Request):
 
     issue_key = request.match_info["issue_key"]
 
-    DB_FILE = "db.sqlite3"
-    conn = sqlite3.connect(DB_FILE)
+    DB_FILE = "helpdeskgram.db"
+    conn = sqlite3.connect(DB_FILE, isolation_level=None)
+    conn.execute('pragma journal_mode=wal')
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, status, locale FROM issues WHERE issue_key = ?", (issue_key,))
     user_id, status, locale = cursor.fetchone()
@@ -59,6 +60,9 @@ async def jira_issue_update(request: web.Request):
                 conn.commit()
                 conn.close()
                 logging.info("Issue status changed.")
+                return web.json_response({"status": "ok"})
+            case _:
+                logging.error("Something went wrong!")
                 return web.json_response({"status": "ok"})
 
     else:

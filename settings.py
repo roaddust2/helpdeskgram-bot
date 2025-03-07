@@ -1,4 +1,5 @@
 import os
+import time
 from dotenv import load_dotenv
 from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
@@ -42,6 +43,11 @@ CATEGORIES = [
     ("Mobile", "mobile"),
     ("Other", "other")
 ]
+
+
+# Timezone affects message in list_issue.py
+
+TIMEZONE = time.tzname[time.daylight]
 
 
 # Jira statuses, checks when webhook comes

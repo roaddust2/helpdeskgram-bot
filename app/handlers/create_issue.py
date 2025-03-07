@@ -139,10 +139,10 @@ async def confirm_request(message: types.Message, state: FSMContext):
     await message.answer(
         text=_(
             "Submit your request\n\n"
-            "Category: {category}\n"
-            "Description: {description}\n"
-            "Screenshots: {number} added\n"
-            "Contact: {first_name} {phone_number}").format(
+            "<b>Category:</b> {category}\n"
+            "<b>Description:</b> {description}\n"
+            "<b>Screenshots:</b> {number} added\n"
+            "<b>Contact:</b> {first_name} {phone_number}").format(
                 category=_(category[0]),
                 description=issue.get('description'),
                 number=len(screenshots) if screenshots else 0,
@@ -195,8 +195,9 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext, i18n
             if screenshots:
                 await upload_jira_issue_attachments(issue_key, screenshots)
 
-            DB_FILE = "db.sqlite3"
-            conn = sqlite3.connect(DB_FILE)
+            DB_FILE = "helpdeskgram.db"
+            conn = sqlite3.connect(DB_FILE, isolation_level=None)
+            conn.execute('pragma journal_mode=wal')
             cursor = conn.cursor()
             cursor.execute(
                 "INSERT INTO issues (user_id, issue_key, status, locale, created_at) VALUES (?, ?, ?, ?, ?)",

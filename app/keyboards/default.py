@@ -6,10 +6,8 @@ from aiogram.utils.i18n import gettext as _
 
 def create_issue_ikb() -> InlineKeyboardBuilder:
     builder = InlineKeyboardBuilder()
-    builder.add(InlineKeyboardButton(
-        text=_("Create new issue"),
-        callback_data="create_new_issue")
-    )
+    builder.row(InlineKeyboardButton(text=_("Create new issue"), callback_data="create_new_issue"))
+    builder.row(InlineKeyboardButton(text=_("My issues"), callback_data="list"))
     return builder.as_markup()
 
 

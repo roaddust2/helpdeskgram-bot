@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-06 12:13+0300\n"
+"POT-Creation-Date: 2025-03-07 09:20+0300\n"
 "PO-Revision-Date: 2025-03-01 16:07+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,117 +18,168 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.1\n"
 
-#: app/api/jira_route_handler.py:27
+#: app/api/jira_route_handler.py:32
 msgid "Your issue <code>{issue_key}</code> appointed to work."
 msgstr "Your issue <code>{issue_key}</code> appointed to work."
 
-#: app/api/jira_route_handler.py:33
+#: app/api/jira_route_handler.py:42
 msgid "Your issue <code>{issue_key}</code> is currently in progress."
 msgstr "Your issue <code>{issue_key}</code> is currently in progress."
 
-#: app/api/jira_route_handler.py:39
+#: app/api/jira_route_handler.py:53
 msgid "Your issue <code>{issue_key}</code> is done!"
 msgstr "Your issue <code>{issue_key}</code> is done!"
 
-#: app/handlers/create_issue.py:42
+#: app/handlers/create_issue.py:40
 msgid "Choose category:"
 msgstr "Choose category:"
 
-#: app/handlers/create_issue.py:56
+#: app/handlers/create_issue.py:54
 msgid "Thank you! Now describe your problem in details:"
 msgstr "Thank you! Now describe your problem in details:"
 
-#: app/handlers/create_issue.py:74
+#: app/handlers/create_issue.py:72
 msgid "The category you entered is incorrect, please press a button below:"
 msgstr "The category you entered is incorrect, please press a button below:"
 
-#: app/handlers/create_issue.py:86
+#: app/handlers/create_issue.py:83
 msgid "Add up to 3 screenshots (optional):"
 msgstr "Add up to 3 screenshots (optional)::"
 
-#: app/handlers/create_issue.py:96
+#: app/handlers/create_issue.py:93
 msgid "You must provide a description:"
 msgstr "You must provide a description:"
 
-#: app/handlers/create_issue.py:115
-#, fuzzy
+#: app/handlers/create_issue.py:111
 msgid "{} of 3 added. Add another screenshot or press Skip"
 msgstr "{} of 3 added. Add another screenshot or press Skip"
 
-#: app/handlers/create_issue.py:120
+#: app/handlers/create_issue.py:116
 msgid "You uploaded maximum amount of screenshots. Please, share your contact."
 msgstr "You uploaded maximum amount of screenshots. Please, share your contact."
 
-#: app/handlers/create_issue.py:129
+#: app/handlers/create_issue.py:125
 msgid "Please, share your contact"
 msgstr "Please, share your contact"
 
-#: app/handlers/create_issue.py:145
-#, fuzzy
+#: app/handlers/create_issue.py:140
 msgid ""
 "Submit your request\n"
 "\n"
-"Category: {category}\n"
-"Description: {description}\n"
-"Screenshots: {number} added\n"
-"Contact: {first_name} {phone_number}"
+"<b>Category:</b> {category}\n"
+"<b>Description:</b> {description}\n"
+"<b>Screenshots:</b> {number} added\n"
+"<b>Contact:</b> {first_name} {phone_number}"
 msgstr ""
 "Submit your request\n"
 "\n"
-"<b>Category</b>: {category}\n"
-"<b>Description</b>: {description}\n"
-"<b>Screenshots</b>: {number} added\n"
-"<b>Contact</b>: {first_name}, {phone_number}"
+"<b>Category:</b> {category}\n"
+"<b>Description:</b> {description}\n"
+"<b>Screenshots:</b> {number} added\n"
+"<b>Contact:</b> {first_name} {phone_number}"
 
-#: app/handlers/create_issue.py:165
+#: app/handlers/create_issue.py:160
 msgid "You uploded maximum amount of screenshots. Please, share your contact."
 msgstr "You uploaded maximum amount of screenshots. Please, share your contact."
 
-#: app/handlers/create_issue.py:173
+#: app/handlers/create_issue.py:168
 msgid "Please, share your contact. Click the button below:"
 msgstr "Please, share your contact. Click the button below:"
 
-#: app/handlers/create_issue.py:213
+#: app/handlers/create_issue.py:210
 msgid ""
 "Your request <code>{issue_key}</code> has been submited. We will help you"
 " as soon as possible!"
 msgstr ""
-"Your request <code>{issue_id}</code> has been submited. We will help you as soon as "
-"possible!"
+"Your request <code>{issue_key}</code> has been submited. We will help you "
+"as soon as possible!"
 
-#: app/handlers/create_issue.py:224
+#: app/handlers/create_issue.py:221
 msgid "Something went wrong, try again after few minutes!"
 msgstr "Something went wrong, try again after few minutes!"
 
-#: app/handlers/create_issue.py:232
+#: app/handlers/create_issue.py:229
 msgid "Request canceled."
 msgstr "Request canceled."
 
-#: app/handlers/start.py:18
+#: app/handlers/list_issue.py:18 app/handlers/list_issue.py:47
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"New issue, we will take it to work soon.\n"
+"Created at {created_at} ({tz})"
+msgstr ""
+"<code>{issue_key}</code>\n"
+"\n"
+"New issue, we will take it to work soon.\n"
+"Created at {created_at} ({tz})"
+
+#: app/handlers/list_issue.py:19 app/handlers/list_issue.py:48
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Issue is already appointed to work!\n"
+"Created at {created_at} ({tz})"
+msgstr ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Issue is already appointed to work!\n"
+"Created at {created_at} ({tz})"
+
+#: app/handlers/list_issue.py:20 app/handlers/list_issue.py:49
+#, fuzzy
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Issue is currently in progress!\n"
+"Created at {created_at} ({tz})"
+msgstr ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Issue is currently in progress!\n"
+"Created at {created_at} ({tz})"
+
+#: app/handlers/list_issue.py:36 app/handlers/list_issue.py:66
+msgid ""
+"When issue is complete, you will be notified. Do you want to create a new"
+" one?"
+msgstr ""
+"When issue is complete, you will be notified. Do you want to create a new"
+" one?"
+
+#: app/handlers/list_issue.py:72
+msgid "No issues were found, want to create one?"
+msgstr "No issues were found, want to create one?"
+
+#: app/handlers/start.py:17
 msgid "Greetings, {name}! And welcome to the helpdesk bot"
 msgstr "Greetings, {name}! And welcome to the helpdesk bot"
 
-#: app/handlers/start.py:31 app/handlers/start.py:42
+#: app/handlers/start.py:30 app/handlers/start.py:42
 msgid "Process has been canceled."
 msgstr "Process has been canceled."
 
-#: app/keyboards/default.py:10
+#: app/keyboards/default.py:9
 msgid "Create new issue"
 msgstr "Create new issue"
 
-#: app/keyboards/default.py:19 app/keyboards/default.py:41
+#: app/keyboards/default.py:10
+msgid "My issues"
+msgstr "My issues"
+
+#: app/keyboards/default.py:17 app/keyboards/default.py:39
 msgid "Cancel"
 msgstr "Cancel"
 
-#: app/keyboards/default.py:20
+#: app/keyboards/default.py:18
 msgid "Submit"
 msgstr "Submit"
 
-#: app/keyboards/default.py:49
+#: app/keyboards/default.py:47
 msgid "Share your contact"
 msgstr "Share your contact"
 
-#: app/keyboards/default.py:56
+#: app/keyboards/default.py:54
 msgid "Skip"
 msgstr "Skip"
 
