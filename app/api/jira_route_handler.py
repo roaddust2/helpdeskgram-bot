@@ -63,7 +63,7 @@ async def jira_issue_update(request: web.Request):
                 logging.info("Issue status changed.")
                 return web.json_response({"status": "ok"})
             case _:
-                logging.error("Something went wrong!")
+                logging.info("Status is not in JiraStatuses. Passed.")
                 return web.json_response({"status": "ok"})
 
     else:

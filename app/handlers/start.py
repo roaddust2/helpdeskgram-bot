@@ -4,6 +4,7 @@ from app.keyboards.default import create_issue_ikb
 from aiogram import types, html, F
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.i18n import gettext as _
+from aiogram.filters import StateFilter
 
 
 router = Router()
@@ -43,3 +44,13 @@ async def data_cancel(callback: types.CallbackQuery, state: FSMContext):
         reply_markup=create_issue_ikb()
     )
     callback.answer()
+
+
+@router.message(StateFilter(None))
+async def exception_handler(message: types.Message):
+    """Cancel and clear state function from inline kb"""
+
+    await message.answer(
+        _("Yokozuna Support bot will help you create a support ticket, send it to our team and receive feedback"),
+        reply_markup=create_issue_ikb()
+    )

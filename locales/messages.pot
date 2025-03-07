@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-07 09:20+0300\n"
+"POT-Creation-Date: 2025-03-07 13:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
 "New issue, we will take it to work soon.\n"
-"Created at {created_at} ({tz})"
+"Created at {created_at} {tz}"
 msgstr ""
 
 #: app/handlers/list_issue.py:19 app/handlers/list_issue.py:48
@@ -106,7 +106,7 @@ msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
 "Issue is already appointed to work!\n"
-"Created at {created_at} ({tz})"
+"Created at {created_at} {tz}"
 msgstr ""
 
 #: app/handlers/list_issue.py:20 app/handlers/list_issue.py:49
@@ -114,7 +114,7 @@ msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
 "Issue is currently in progress!\n"
-"Created at {created_at} ({tz})"
+"Created at {created_at} {tz}"
 msgstr ""
 
 #: app/handlers/list_issue.py:36 app/handlers/list_issue.py:66
@@ -127,12 +127,18 @@ msgstr ""
 msgid "No issues were found, want to create one?"
 msgstr ""
 
-#: app/handlers/start.py:17
+#: app/handlers/start.py:18
 msgid "Greetings, {name}! And welcome to the helpdesk bot"
 msgstr ""
 
-#: app/handlers/start.py:30 app/handlers/start.py:42
+#: app/handlers/start.py:31 app/handlers/start.py:43
 msgid "Process has been canceled."
+msgstr ""
+
+#: app/handlers/start.py:54
+msgid ""
+"Yokozuna Support bot will help you create a support ticket, send it to "
+"our team and receive feedback"
 msgstr ""
 
 #: app/keyboards/default.py:9

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-07 09:20+0300\n"
+"POT-Creation-Date: 2025-03-07 13:19+0300\n"
 "PO-Revision-Date: 2025-03-01 16:07+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -91,8 +91,8 @@ msgid ""
 "Your request <code>{issue_key}</code> has been submited. We will help you"
 " as soon as possible!"
 msgstr ""
-"Your request <code>{issue_key}</code> has been submited. We will help you "
-"as soon as possible!"
+"Your request <code>{issue_key}</code> has been submited. We will help you"
+" as soon as possible!"
 
 #: app/handlers/create_issue.py:221
 msgid "Something went wrong, try again after few minutes!"
@@ -103,11 +103,12 @@ msgid "Request canceled."
 msgstr "Request canceled."
 
 #: app/handlers/list_issue.py:18 app/handlers/list_issue.py:47
+#, fuzzy
 msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
 "New issue, we will take it to work soon.\n"
-"Created at {created_at} ({tz})"
+"Created at {created_at} {tz}"
 msgstr ""
 "<code>{issue_key}</code>\n"
 "\n"
@@ -115,11 +116,12 @@ msgstr ""
 "Created at {created_at} ({tz})"
 
 #: app/handlers/list_issue.py:19 app/handlers/list_issue.py:48
+#, fuzzy
 msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
 "Issue is already appointed to work!\n"
-"Created at {created_at} ({tz})"
+"Created at {created_at} {tz}"
 msgstr ""
 "<code>{issue_key}</code>\n"
 "\n"
@@ -132,7 +134,7 @@ msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
 "Issue is currently in progress!\n"
-"Created at {created_at} ({tz})"
+"Created at {created_at} {tz}"
 msgstr ""
 "<code>{issue_key}</code>\n"
 "\n"
@@ -151,13 +153,21 @@ msgstr ""
 msgid "No issues were found, want to create one?"
 msgstr "No issues were found, want to create one?"
 
-#: app/handlers/start.py:17
+#: app/handlers/start.py:18
 msgid "Greetings, {name}! And welcome to the helpdesk bot"
 msgstr "Greetings, {name}! And welcome to the helpdesk bot"
 
-#: app/handlers/start.py:30 app/handlers/start.py:42
+#: app/handlers/start.py:31 app/handlers/start.py:43
 msgid "Process has been canceled."
 msgstr "Process has been canceled."
+
+#: app/handlers/start.py:54
+msgid ""
+"Yokozuna Support bot will help you create a support ticket, send it to "
+"our team and receive feedback"
+msgstr ""
+"Yokozuna Support bot will help you create a support ticket, send it to "
+"our team and receive feedback"
 
 #: app/keyboards/default.py:9
 msgid "Create new issue"
