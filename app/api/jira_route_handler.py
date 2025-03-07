@@ -52,10 +52,11 @@ async def jira_issue_update(request: web.Request):
                     chat_id=user_id,
                     text=i18n.gettext("Your issue <code>{issue_key}</code> is done!", locale=locale).format(issue_key=issue_key)
                 )
-                await bot.send_message(
-                    chat_id=user_id,
-                    text=last_comment
-                )
+                if last_comment:
+                    await bot.send_message(
+                        chat_id=user_id,
+                        text=last_comment
+                    )
                 cursor.execute("UPDATE issues SET status = ? WHERE issue_key = ?", ("done", issue_key))
                 conn.commit()
                 conn.close()

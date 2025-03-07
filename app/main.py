@@ -63,6 +63,7 @@ def main() -> None:
         locale TEXT,
         created_at TEXT NOT NULL
     )''')
+    cursor.execute('''CREATE INDEX IF NOT EXISTS idx_user_id ON issues(user_id)''')
     conn.commit()
     conn.close()
 
