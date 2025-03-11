@@ -47,7 +47,7 @@ sequenceDiagram
 
 ## Features
 
-- [Basic logic] Ask the user about problems, gather info (Categry, Description, Screenshots, Contact information)
+- [Basic logic] Ask the user about problems, gather info (Category, Description, Screenshots, Contact information)
 - [Basic logic] Creates issues with Jira REST API
 - [Basic logic] Notifies user about issue status updates with Jira webhooks
 - [Basic logic] Deliver the last issue comment with Jira REST API, when the issue updates to "Done" status
