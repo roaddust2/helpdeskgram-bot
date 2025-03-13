@@ -80,7 +80,7 @@ sequenceDiagram
 
 **EN:**  
 1. Clone repo
-2. Create .env file and put your Telegram Bot token and Jira credentials listed in example.env
+2. Create `.env` file and put your Telegram Bot token and Jira credentials listed in example.env
 3. Bot is in webhook mode, so you will need a domain, vscode ports works pretty good for development reasons. I use Let's Encrypt certificates and actual domain
 4. Create a webhook on issues update in Jira admin settings
 5. Configure settings.py in the root folder to your needs

@@ -16,7 +16,15 @@ async def jira_issue_update(request: web.Request):
     conn.execute('pragma journal_mode=wal')
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, status, locale FROM issues WHERE issue_key = ?", (issue_key,))
-    user_id, status, locale = cursor.fetchone()
+    result = cursor.fetchone()
+
+    # No issue with provided issue_key found handling
+    if result is None:
+        conn.close()
+        logging.info(f"No issue with {issue_key} was found.")
+        return web.json_response({"status": "ok"})
+    else:
+        user_id, status, locale = cursor.fetchone()
 
     if user_id and status != "done":
         data = await request.json()
