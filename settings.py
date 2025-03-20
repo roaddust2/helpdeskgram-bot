@@ -36,11 +36,11 @@ i18n = I18n(path=WORKDIR / 'locales', default_locale=DEFAULT_LOCALE, domain="mes
 # When creating issue user should choose a category, rewrite if needed
 
 CATEGORIES = [
-    ("Dealer's calculator", "dealer_calc"),
-    ("Client's calculator", "client_calc"),
-    ("Tracking", "tracking"),
-    ("Translations", "translations"),
-    ("Mobile", "mobile"),
+    ("Category 1", "category1"),
+    ("Category 2", "category2"),
+    ("Category 3", "category3"),
+    ("Category 4", "category4"),
+    ("Category 5", "category5"),
     ("Other", "other")
 ]
 

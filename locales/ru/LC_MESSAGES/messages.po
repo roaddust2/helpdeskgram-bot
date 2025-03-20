@@ -197,21 +197,6 @@ msgstr "Поделиться контактом"
 msgid "Skip"
 msgstr "Пропустить"
 
-msgid "Dealer's calculator"
-msgstr "Калькулятор дилера"
-
-msgid "Client's calculator"
-msgstr "Калькулятор клиента"
-
-msgid "Tracking"
-msgstr "Трекинг"
-
-msgid "Translations"
-msgstr "Переводы"
-
-msgid "Mobile"
-msgstr "Мобильное приложение"
-
-msgid "Other"
-msgstr "Другое"
+msgid "Category"
+msgstr "Категория"
 

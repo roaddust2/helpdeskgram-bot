@@ -24,7 +24,7 @@ async def jira_issue_update(request: web.Request):
         logging.info(f"No issue with {issue_key} was found.")
         return web.json_response({"status": "ok"})
     else:
-        user_id, status, locale = cursor.fetchone()
+        user_id, status, locale = result
 
     if user_id and status != "done":
         data = await request.json()
