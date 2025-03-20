@@ -1,13 +1,60 @@
 import sqlite3
-from aiogram import Router, F
-from aiogram.filters import Command
-from aiogram import types
+from aiogram import Router
+from aiogram.filters import Command, CommandStart, StateFilter
+from app.keyboards.default import create_issue_ikb, choose_category_ikb
+from aiogram import types, html, F
+from aiogram.fsm.context import FSMContext
 from aiogram.utils.i18n import gettext as _
-from app.keyboards.default import create_issue_ikb
+from app.handlers.create_issue import CATEGORIES, CreateIssue
 from settings import TIMEZONE
 
 
 router = Router()
+
+
+@router.message(CommandStart())
+async def cmd_start(message: types.Message) -> None:
+    """Main start function"""
+
+    await message.answer(
+        _("Greetings, {name}! And welcome to the helpdesk bot").format(
+            name=html.quote(message.from_user.full_name)
+        ),
+        reply_markup=create_issue_ikb()
+    )
+
+
+@router.message(Command("cancel"))
+async def cmd_cancel(message: types.Message, state: FSMContext):
+    """Anytime cancel and clear state function"""
+
+    await state.clear()
+    await message.answer(
+        _("Process has been canceled."),
+        reply_markup=create_issue_ikb()
+    )
+
+
+@router.callback_query(F.data == "cancel")
+async def data_cancel(callback: types.CallbackQuery, state: FSMContext):
+    """Cancel and clear state function from inline kb"""
+
+    await callback.message.edit_text(
+        text=_("Process has been canceled."),
+        reply_markup=create_issue_ikb())
+    await state.clear()
+    callback.answer()
+
+
+@router.message(StateFilter(None), Command("create"))
+async def choose_category(message: types.CallbackQuery, state: FSMContext):
+
+    message = await message.answer(
+        text=_("Choose category:"),
+        reply_markup=choose_category_ikb(CATEGORIES)
+    )
+    await state.update_data(category_message_id=message.message_id)
+    await state.set_state(CreateIssue.category)
 
 
 @router.message(Command("list"))
@@ -73,3 +120,13 @@ async def data_list(callback: types.CallbackQuery):
             reply_markup=create_issue_ikb()
         )
         callback.answer()
+
+
+@router.message(StateFilter(None))
+async def exception_handler(message: types.Message):
+    """Catch any unhandled user messages"""
+
+    await message.answer(
+        _("Yokozuna Support bot will help you create a support ticket, send it to our team and receive feedback"),
+        reply_markup=create_issue_ikb()
+    )

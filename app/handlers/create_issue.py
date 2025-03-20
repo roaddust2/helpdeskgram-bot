@@ -35,8 +35,7 @@ class CreateIssue(StatesGroup):
 @router.callback_query(StateFilter(None), F.data == "create_new_issue")
 async def choose_category(callback: types.CallbackQuery, state: FSMContext):
 
-    await callback.message.delete()
-    message = await callback.message.answer(
+    message = await callback.message.edit_text(
         text=_("Choose category:"),
         reply_markup=choose_category_ikb(CATEGORIES)
     )
@@ -47,10 +46,10 @@ async def choose_category(callback: types.CallbackQuery, state: FSMContext):
 
 @router.callback_query(CreateIssue.category, F.data.in_({callback for _, callback in CATEGORIES}))
 async def category_chosen(callback: types.CallbackQuery, state: FSMContext):
-    await callback.message.delete()
+
     await state.update_data(category_message_id=None)
     await state.update_data(category=callback.data)
-    await callback.message.answer(
+    await callback.message.edit_text(
         text=_("Thank you! Now describe your problem in details:")
     )
     await state.set_state(CreateIssue.description)
@@ -172,7 +171,7 @@ async def add_screenshots_exceeded_text(message: types.Message, state: FSMContex
 
 @router.callback_query(CreateIssue.confirmation, F.data == "submit")
 async def process_confirm(callback: types.CallbackQuery, state: FSMContext, i18n: I18n):
-    await callback.message.delete()
+
     issue = await state.get_data()
     screenshots = issue.get('screenshots')
     locale = i18n.ctx_locale.get()
@@ -189,7 +188,11 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext, i18n
                     "customfield_10108": "YOK-584",
                     "summary": f"{' '.join(issue.get('description').split()[:5])}...",
                     "description": issue.get('description'),
-                    "labels": [issue.get('category'), issue.get('contact').first_name, issue.get('contact').phone_number],
+                    "labels": [
+                        issue.get('category'),
+                        issue.get('contact').first_name,
+                        issue.get('contact').phone_number
+                    ],
                 }
             )
             if screenshots:
@@ -206,10 +209,10 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext, i18n
             conn.commit()
             conn.close()
 
-            await callback.message.answer(
-                text=_("Your request <code>{issue_key}</code> has been submited. We will help you as soon as possible!").format(
-                    issue_key=issue_key
-                ),
+            await callback.message.edit_text(
+                text=_(
+                    "Your request <code>{issue_key}</code> has been submited. "
+                    "We will help you as soon as possible!").format(issue_key=issue_key),
                 reply_markup=create_issue_ikb()
             )
             await state.clear()
@@ -217,7 +220,7 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext, i18n
 
         except JiraFailure as err:
             logging.error(err)
-            await callback.message.answer(
+            await callback.message.edit_text(
                 text=_("Something went wrong, try again after few minutes!")
             )
             await callback.answer()

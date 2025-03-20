@@ -16,7 +16,15 @@ async def jira_issue_update(request: web.Request):
     conn.execute('pragma journal_mode=wal')
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, status, locale FROM issues WHERE issue_key = ?", (issue_key,))
-    user_id, status, locale = cursor.fetchone()
+    result = cursor.fetchone()
+
+    # No issue with provided issue_key found handling
+    if result is None:
+        conn.close()
+        logging.info(f"No issue with {issue_key} was found.")
+        return web.json_response({"status": "ok"})
+    else:
+        user_id, status, locale = result
 
     if user_id and status != "done":
         data = await request.json()
@@ -29,7 +37,9 @@ async def jira_issue_update(request: web.Request):
             case JiraStatuses.APPOINTED:
                 await bot.send_message(
                     chat_id=user_id,
-                    text=i18n.gettext("Your issue <code>{issue_key}</code> appointed to work.", locale=locale).format(issue_key=issue_key)
+                    text=i18n.gettext(
+                        "Your issue <code>{issue_key}</code> appointed to work.",
+                        locale=locale).format(issue_key=issue_key)
                 )
                 cursor.execute("UPDATE issues SET status = ? WHERE issue_key = ?", ("appointed", issue_key))
                 conn.commit()
@@ -39,7 +49,9 @@ async def jira_issue_update(request: web.Request):
             case JiraStatuses.IN_PROGRESS:
                 await bot.send_message(
                     chat_id=user_id,
-                    text=i18n.gettext("Your issue <code>{issue_key}</code> is currently in progress.", locale=locale).format(issue_key=issue_key)
+                    text=i18n.gettext(
+                        "Your issue <code>{issue_key}</code> is currently in progress.",
+                        locale=locale).format(issue_key=issue_key)
                 )
                 cursor.execute("UPDATE issues SET status = ? WHERE issue_key = ?", ("in_progress", issue_key))
                 conn.commit()
@@ -50,7 +62,9 @@ async def jira_issue_update(request: web.Request):
                 last_comment = await get_jira_issue_last_comment(issue_key)
                 await bot.send_message(
                     chat_id=user_id,
-                    text=i18n.gettext("Your issue <code>{issue_key}</code> is done!", locale=locale).format(issue_key=issue_key)
+                    text=i18n.gettext(
+                        "Your issue <code>{issue_key}</code> is done!",
+                        locale=locale).format(issue_key=issue_key)
                 )
                 if last_comment:
                     await bot.send_message(
