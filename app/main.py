@@ -3,7 +3,7 @@ import sqlite3
 from settings import bot, i18n
 from settings import DEFAULT_LOCALE, DEBUG
 from settings import BASE_WEBHOOK_URL, WEB_SERVER_HOST, WEB_SERVER_PORT, WEBHOOK_PATH, JIRA_WEBHOOK_PATH
-from app.handlers import create_issue, list_issue, start
+from app.handlers import create_issue, commands
 from app.api.jira_route_handler import jira_issue_update
 from aiogram import Bot, Dispatcher
 from aiogram.utils.i18n import ConstI18nMiddleware, SimpleI18nMiddleware
@@ -35,7 +35,7 @@ def main() -> None:
         dp.update.middleware(ConstI18nMiddleware(locale="en"))
 
     # Registering routers and middlewares
-    dp.include_routers(start.router, create_issue.router, list_issue.router)
+    dp.include_routers(commands.router, create_issue.router)
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 

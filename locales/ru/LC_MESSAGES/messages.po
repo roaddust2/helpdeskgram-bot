@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-07 13:19+0300\n"
+"POT-Creation-Date: 2025-03-20 09:45+0300\n"
 "PO-Revision-Date: 2025-03-01 16:08+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,55 +19,119 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.1\n"
 
-#: app/api/jira_route_handler.py:32
+#: app/api/jira_route_handler.py:40
 msgid "Your issue <code>{issue_key}</code> appointed to work."
 msgstr "Ваша заявка с номером <code>{issue_key}</code> назначена в работу."
 
-#: app/api/jira_route_handler.py:42
+#: app/api/jira_route_handler.py:52
 msgid "Your issue <code>{issue_key}</code> is currently in progress."
 msgstr "Ваша заявка с номером <code>{issue_key}</code> в работе."
 
-#: app/api/jira_route_handler.py:53
+#: app/api/jira_route_handler.py:65
 msgid "Your issue <code>{issue_key}</code> is done!"
 msgstr "Ваша заявка с номером <code>{issue_key}</code> выполнена!"
 
-#: app/handlers/create_issue.py:40
+#: app/handlers/commands.py:20
+msgid "Greetings, {name}! And welcome to the helpdesk bot"
+msgstr "Приветствую, {name}! Добро пожаловать в бот технической поддержки!"
+
+#: app/handlers/commands.py:33 app/handlers/commands.py:43
+msgid "Process has been canceled."
+msgstr "Процесс был отменен."
+
+#: app/handlers/commands.py:53 app/handlers/create_issue.py:39
 msgid "Choose category:"
 msgstr "Выберите категорию:"
 
-#: app/handlers/create_issue.py:54
+#: app/handlers/commands.py:65 app/handlers/commands.py:94
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"New issue, we will take it to work soon.\n"
+"Created at {created_at} {tz}"
+msgstr ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Новая заявка, мы скоро возьмем ее в работу.\n"
+"Создана: {created_at} ({tz})"
+
+#: app/handlers/commands.py:66 app/handlers/commands.py:95
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Issue is already appointed to work!\n"
+"Created at {created_at} {tz}"
+msgstr ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Заявка уже назначена специалисту!\n"
+"Создана: {created_at} ({tz})"
+
+#: app/handlers/commands.py:67 app/handlers/commands.py:96
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Issue is currently in progress!\n"
+"Created at {created_at} {tz}"
+msgstr ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Ваша заявка уже в работе!\n"
+"Создана: {created_at} ({tz})"
+
+#: app/handlers/commands.py:83 app/handlers/commands.py:113
+msgid ""
+"When issue is complete, you will be notified. Do you want to create a new"
+" one?"
+msgstr ""
+"После выполнения вашей заявки, мы вас оповестим с подробностями. Хотите "
+"создать новую заявку?"
+
+#: app/handlers/commands.py:119
+msgid "No issues were found, want to create one?"
+msgstr "Заявки не найдены, хотите создать?"
+
+#: app/handlers/commands.py:130
+msgid ""
+"Yokozuna Support bot will help you create a support ticket, send it to "
+"our team and receive feedback"
+msgstr ""
+"Бот Yokozuna Support поможет вам создать заявку, отправить ее нашей "
+"команде поддержки и получить обратную связь"
+
+#: app/handlers/create_issue.py:53
 msgid "Thank you! Now describe your problem in details:"
 msgstr "Спасибо! А теперь опишите проблему, с которой столкнулись:"
 
-#: app/handlers/create_issue.py:72
+#: app/handlers/create_issue.py:71
 msgid "The category you entered is incorrect, please press a button below:"
 msgstr ""
 "Выбранная категория некорректна, пожалуйста нажмите подходящую кнопку "
 "ниже:"
 
-#: app/handlers/create_issue.py:83
+#: app/handlers/create_issue.py:82
 msgid "Add up to 3 screenshots (optional):"
 msgstr "Добавьте скриншоты до 3х штук (опционально):"
 
-#: app/handlers/create_issue.py:93
+#: app/handlers/create_issue.py:92
 msgid "You must provide a description:"
 msgstr "Вы должны добавить описание"
 
-#: app/handlers/create_issue.py:111
+#: app/handlers/create_issue.py:110
 msgid "{} of 3 added. Add another screenshot or press Skip"
 msgstr "{} из 3 добавлено. Добавьте еще скриншоты или нажмите Пропустить"
 
-#: app/handlers/create_issue.py:116
+#: app/handlers/create_issue.py:115
 msgid "You uploaded maximum amount of screenshots. Please, share your contact."
 msgstr ""
 "Вы добавили максимальное количество скриншотов. Пожалуйста поделитесь "
 "вашим контактом."
 
-#: app/handlers/create_issue.py:125
+#: app/handlers/create_issue.py:124
 msgid "Please, share your contact"
 msgstr "Пожалуйста, поделитесь контактом"
 
-#: app/handlers/create_issue.py:140
+#: app/handlers/create_issue.py:139
 msgid ""
 "Submit your request\n"
 "\n"
@@ -83,17 +147,17 @@ msgstr ""
 "<b>Скриншоты</b>: {number} добавлено\n"
 "<b>Контакт</b>: {first_name}, {phone_number}"
 
-#: app/handlers/create_issue.py:160
+#: app/handlers/create_issue.py:159
 msgid "You uploded maximum amount of screenshots. Please, share your contact."
 msgstr ""
 "Вы добавили максимальное количество скриншотов. Пожалуйста поделитесь "
 "вашим контактом."
 
-#: app/handlers/create_issue.py:168
+#: app/handlers/create_issue.py:167
 msgid "Please, share your contact. Click the button below:"
 msgstr "Пожалуйста, поделитесь контактом. Нажмите на кнопку ниже"
 
-#: app/handlers/create_issue.py:210
+#: app/handlers/create_issue.py:213
 msgid ""
 "Your request <code>{issue_key}</code> has been submited. We will help you"
 " as soon as possible!"
@@ -101,77 +165,13 @@ msgstr ""
 "Ваша заявка с номером <code>{issue_key}</code> отправлена. Мы постараемся"
 " помочь как можно скорее!"
 
-#: app/handlers/create_issue.py:221
+#: app/handlers/create_issue.py:224
 msgid "Something went wrong, try again after few minutes!"
 msgstr "Что-то пошло не так, попробуйте еще раз через несколько минут!"
 
-#: app/handlers/create_issue.py:229
+#: app/handlers/create_issue.py:232
 msgid "Request canceled."
 msgstr "Запрос отменен."
-
-#: app/handlers/list_issue.py:18 app/handlers/list_issue.py:47
-msgid ""
-"<code>{issue_key}</code>\n"
-"\n"
-"New issue, we will take it to work soon.\n"
-"Created at {created_at} {tz}"
-msgstr ""
-"<code>{issue_key}</code>\n"
-"\n"
-"Новая заявка, мы скоро возьмем ее в работу.\n"
-"Создана: {created_at} ({tz})"
-
-#: app/handlers/list_issue.py:19 app/handlers/list_issue.py:48
-msgid ""
-"<code>{issue_key}</code>\n"
-"\n"
-"Issue is already appointed to work!\n"
-"Created at {created_at} {tz}"
-msgstr ""
-"<code>{issue_key}</code>\n"
-"\n"
-"Заявка уже назначена специалисту!\n"
-"Создана: {created_at} ({tz})"
-
-#: app/handlers/list_issue.py:20 app/handlers/list_issue.py:49
-msgid ""
-"<code>{issue_key}</code>\n"
-"\n"
-"Issue is currently in progress!\n"
-"Created at {created_at} {tz}"
-msgstr ""
-"<code>{issue_key}</code>\n"
-"\n"
-"Ваша заявка уже в работе!\n"
-"Создана: {created_at} ({tz})"
-
-#: app/handlers/list_issue.py:36 app/handlers/list_issue.py:66
-msgid ""
-"When issue is complete, you will be notified. Do you want to create a new"
-" one?"
-msgstr ""
-"После выполнения вашей заявки, мы вас оповестим с подробностями. Хотите "
-"создать новую заявку?"
-
-#: app/handlers/list_issue.py:72
-msgid "No issues were found, want to create one?"
-msgstr "Заявки не найдены, хотите создать?"
-
-#: app/handlers/start.py:18
-msgid "Greetings, {name}! And welcome to the helpdesk bot"
-msgstr "Приветствую, {name}! Добро пожаловать в бот технической поддержки!"
-
-#: app/handlers/start.py:31 app/handlers/start.py:43
-msgid "Process has been canceled."
-msgstr "Процесс был отменен."
-
-#: app/handlers/start.py:54
-msgid ""
-"Yokozuna Support bot will help you create a support ticket, send it to "
-"our team and receive feedback"
-msgstr ""
-"Бот Yokozuna Support поможет вам создать заявку, отправить ее "
-"нашей команде поддержки и получить обратную связь"
 
 #: app/keyboards/default.py:9
 msgid "Create new issue"

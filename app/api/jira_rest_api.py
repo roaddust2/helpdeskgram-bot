@@ -82,7 +82,8 @@ async def create_jira_issue(issue_data: dict):
                 raise JiraFailure
 
 
-async def upload_jira_issue_attachments(
+# TODO: Needs refactoring C901
+async def upload_jira_issue_attachments(  # noqa C901
     issue_key: str,
     attachments: list[tuple[io.BytesIO, str]],
     retries=3
@@ -137,10 +138,16 @@ async def upload_jira_issue_attachments(
                         logging.error("Failed to refresh session.")
                         return None
                 elif response.status == 403:
-                    logging.error("Attachments are disabled or you don't have permission to add attachments to this issue.")
+                    logging.error(
+                        "Attachments are disabled or you don't have "
+                        "permission to add attachments to this issue."
+                    )
                     return None
                 elif response.status == 404:
-                    logging.error(f"Issue is not found, the user does not have permission to view it, or the attachments exceeds the max size.\n{await response.text()}")
+                    logging.error(
+                        f"Issue is not found, the user does not have permission "
+                        f"to view it, or the attachments exceeds the max size.\n{await response.text()}"
+                    )
                     return None
                 else:
                     logging.error(f"Failed to upload attachment! {response.status} {await response.text()}")

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-07 13:19+0300\n"
+"POT-Creation-Date: 2025-03-20 09:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.1\n"
 
-#: app/api/jira_route_handler.py:32
+#: app/api/jira_route_handler.py:40
 msgid "Your issue <code>{issue_key}</code> appointed to work."
 msgstr ""
 
-#: app/api/jira_route_handler.py:42
+#: app/api/jira_route_handler.py:52
 msgid "Your issue <code>{issue_key}</code> is currently in progress."
 msgstr ""
 
-#: app/api/jira_route_handler.py:53
+#: app/api/jira_route_handler.py:65
 msgid "Your issue <code>{issue_key}</code> is done!"
 msgstr ""
 
-#: app/handlers/create_issue.py:40
+#: app/handlers/commands.py:20
+msgid "Greetings, {name}! And welcome to the helpdesk bot"
+msgstr ""
+
+#: app/handlers/commands.py:33 app/handlers/commands.py:43
+msgid "Process has been canceled."
+msgstr ""
+
+#: app/handlers/commands.py:53 app/handlers/create_issue.py:39
 msgid "Choose category:"
 msgstr ""
 
-#: app/handlers/create_issue.py:54
+#: app/handlers/commands.py:65 app/handlers/commands.py:94
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"New issue, we will take it to work soon.\n"
+"Created at {created_at} {tz}"
+msgstr ""
+
+#: app/handlers/commands.py:66 app/handlers/commands.py:95
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Issue is already appointed to work!\n"
+"Created at {created_at} {tz}"
+msgstr ""
+
+#: app/handlers/commands.py:67 app/handlers/commands.py:96
+msgid ""
+"<code>{issue_key}</code>\n"
+"\n"
+"Issue is currently in progress!\n"
+"Created at {created_at} {tz}"
+msgstr ""
+
+#: app/handlers/commands.py:83 app/handlers/commands.py:113
+msgid ""
+"When issue is complete, you will be notified. Do you want to create a new"
+" one?"
+msgstr ""
+
+#: app/handlers/commands.py:119
+msgid "No issues were found, want to create one?"
+msgstr ""
+
+#: app/handlers/commands.py:130
+msgid ""
+"Yokozuna Support bot will help you create a support ticket, send it to "
+"our team and receive feedback"
+msgstr ""
+
+#: app/handlers/create_issue.py:53
 msgid "Thank you! Now describe your problem in details:"
 msgstr ""
 
-#: app/handlers/create_issue.py:72
+#: app/handlers/create_issue.py:71
 msgid "The category you entered is incorrect, please press a button below:"
 msgstr ""
 
-#: app/handlers/create_issue.py:83
+#: app/handlers/create_issue.py:82
 msgid "Add up to 3 screenshots (optional):"
 msgstr ""
 
-#: app/handlers/create_issue.py:93
+#: app/handlers/create_issue.py:92
 msgid "You must provide a description:"
 msgstr ""
 
-#: app/handlers/create_issue.py:111
+#: app/handlers/create_issue.py:110
 msgid "{} of 3 added. Add another screenshot or press Skip"
 msgstr ""
 
-#: app/handlers/create_issue.py:116
+#: app/handlers/create_issue.py:115
 msgid "You uploaded maximum amount of screenshots. Please, share your contact."
 msgstr ""
 
-#: app/handlers/create_issue.py:125
+#: app/handlers/create_issue.py:124
 msgid "Please, share your contact"
 msgstr ""
 
-#: app/handlers/create_issue.py:140
+#: app/handlers/create_issue.py:139
 msgid ""
 "Submit your request\n"
 "\n"
@@ -71,74 +119,26 @@ msgid ""
 "<b>Contact:</b> {first_name} {phone_number}"
 msgstr ""
 
-#: app/handlers/create_issue.py:160
+#: app/handlers/create_issue.py:159
 msgid "You uploded maximum amount of screenshots. Please, share your contact."
 msgstr ""
 
-#: app/handlers/create_issue.py:168
+#: app/handlers/create_issue.py:167
 msgid "Please, share your contact. Click the button below:"
 msgstr ""
 
-#: app/handlers/create_issue.py:210
+#: app/handlers/create_issue.py:213
 msgid ""
 "Your request <code>{issue_key}</code> has been submited. We will help you"
 " as soon as possible!"
 msgstr ""
 
-#: app/handlers/create_issue.py:221
+#: app/handlers/create_issue.py:224
 msgid "Something went wrong, try again after few minutes!"
 msgstr ""
 
-#: app/handlers/create_issue.py:229
+#: app/handlers/create_issue.py:232
 msgid "Request canceled."
-msgstr ""
-
-#: app/handlers/list_issue.py:18 app/handlers/list_issue.py:47
-msgid ""
-"<code>{issue_key}</code>\n"
-"\n"
-"New issue, we will take it to work soon.\n"
-"Created at {created_at} {tz}"
-msgstr ""
-
-#: app/handlers/list_issue.py:19 app/handlers/list_issue.py:48
-msgid ""
-"<code>{issue_key}</code>\n"
-"\n"
-"Issue is already appointed to work!\n"
-"Created at {created_at} {tz}"
-msgstr ""
-
-#: app/handlers/list_issue.py:20 app/handlers/list_issue.py:49
-msgid ""
-"<code>{issue_key}</code>\n"
-"\n"
-"Issue is currently in progress!\n"
-"Created at {created_at} {tz}"
-msgstr ""
-
-#: app/handlers/list_issue.py:36 app/handlers/list_issue.py:66
-msgid ""
-"When issue is complete, you will be notified. Do you want to create a new"
-" one?"
-msgstr ""
-
-#: app/handlers/list_issue.py:72
-msgid "No issues were found, want to create one?"
-msgstr ""
-
-#: app/handlers/start.py:18
-msgid "Greetings, {name}! And welcome to the helpdesk bot"
-msgstr ""
-
-#: app/handlers/start.py:31 app/handlers/start.py:43
-msgid "Process has been canceled."
-msgstr ""
-
-#: app/handlers/start.py:54
-msgid ""
-"Yokozuna Support bot will help you create a support ticket, send it to "
-"our team and receive feedback"
 msgstr ""
 
 #: app/keyboards/default.py:9
