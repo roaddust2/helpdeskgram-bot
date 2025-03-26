@@ -74,9 +74,19 @@ def main() -> None:
 if __name__ == "__main__":
 
     # Add logging
+    log_format = "%(asctime)s - %(levelname)s - %(message)s"
+    log_filename = "debug.log"
+
     match DEBUG:
         case True:
-            logging.basicConfig(level=logging.DEBUG)
+            logging.basicConfig(
+                level=logging.DEBUG,
+                format=log_format,
+                handlers=[
+                    logging.FileHandler(log_filename, mode='a'),
+                    logging.StreamHandler()
+                ]
+            )
         case False:
             logging.basicConfig(level=logging.INFO)
     main()

@@ -172,7 +172,11 @@ async def add_screenshots_exceeded_text(message: types.Message, state: FSMContex
 @router.callback_query(CreateIssue.confirmation, F.data == "submit")
 async def process_confirm(callback: types.CallbackQuery, state: FSMContext, i18n: I18n):
 
+    SUMMARY_LEN = 50
+
     issue = await state.get_data()
+    description = issue.get('description')
+    summary = description[:SUMMARY_LEN] + "..." if len(description) > SUMMARY_LEN else description
     screenshots = issue.get('screenshots')
     locale = i18n.ctx_locale.get()
     async with ChatActionSender.typing(bot=callback.bot, chat_id=callback.message.chat.id):
@@ -186,8 +190,8 @@ async def process_confirm(callback: types.CallbackQuery, state: FSMContext, i18n
                         "id": JIRA_ISSUE_TYPE
                     },
                     "customfield_10108": "YOK-584",
-                    "summary": f"{' '.join(issue.get('description').split()[:5])}...",
-                    "description": issue.get('description'),
+                    "summary": summary,
+                    "description": description,
                     "labels": [
                         issue.get('category'),
                         issue.get('contact').first_name,
