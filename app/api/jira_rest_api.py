@@ -68,13 +68,30 @@ async def create_jira_issue(issue_data: dict):
             headers=headers,
             json={"fields": issue_data}
         ) as response:
-            if response.status == 201:
+            if response.status in [200, 201]:
                 data = await response.json()
                 logging.info(f"Issue created with key {data['key']}.")
                 return data['key']
             elif response.status == 401:
                 logging.error("Unauthorized. Retry...")
-                return await create_jira_issue(issue_data)
+                await get_jira_cookie()
+                if SESSION_COOKIE:
+                    headers.update({'Cookie': f"{SESSION_COOKIE['name']}={SESSION_COOKIE['value']}"})
+                    async with session.post(
+                        url=url,
+                        headers=headers,
+                        json={"fields": issue_data}
+                    ) as retry_response:
+                        if retry_response.status in {200, 201}:
+                            data = await response.json()
+                            logging.info(f"Issue created with key {data['key']} on retry.")
+                            return data['key']
+                        else:
+                            logging.error(f"Retry failed: {retry_response.status} {await retry_response.text()}")
+                            raise JiraFailure
+                else:
+                    logging.error("Re-authentication failed. Cannot create issue.")
+                    raise JiraFailure
             elif response.status == 400:
                 logging.error(f"Input is invalid! {response.status} {await response.text()}")
             else:
