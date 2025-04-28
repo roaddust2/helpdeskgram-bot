@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-20 09:45+0300\n"
+"POT-Creation-Date: 2025-04-02 16:37+0300\n"
 "PO-Revision-Date: 2025-03-01 16:08+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.1\n"
 
-#: app/api/jira_route_handler.py:40
+#: app/api/jira_route_handler.py:36
 msgid "Your issue <code>{issue_key}</code> appointed to work."
 msgstr "Ваша заявка с номером <code>{issue_key}</code> назначена в работу."
 
-#: app/api/jira_route_handler.py:52
+#: app/api/jira_route_handler.py:47
 msgid "Your issue <code>{issue_key}</code> is currently in progress."
 msgstr "Ваша заявка с номером <code>{issue_key}</code> в работе."
 
-#: app/api/jira_route_handler.py:65
+#: app/api/jira_route_handler.py:59
 msgid "Your issue <code>{issue_key}</code> is done!"
 msgstr "Ваша заявка с номером <code>{issue_key}</code> выполнена!"
 
-#: app/handlers/commands.py:20
+#: app/handlers/commands.py:19
 msgid "Greetings, {name}! And welcome to the helpdesk bot"
 msgstr "Приветствую, {name}! Добро пожаловать в бот технической поддержки!"
 
-#: app/handlers/commands.py:33 app/handlers/commands.py:43
+#: app/handlers/commands.py:32 app/handlers/commands.py:42
 msgid "Process has been canceled."
 msgstr "Процесс был отменен."
 
-#: app/handlers/commands.py:53 app/handlers/create_issue.py:39
+#: app/handlers/commands.py:52 app/handlers/create_issue.py:45
 msgid "Choose category:"
 msgstr "Выберите категорию:"
 
-#: app/handlers/commands.py:65 app/handlers/commands.py:94
+#: app/handlers/commands.py:64 app/handlers/commands.py:95
 msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
@@ -55,7 +55,7 @@ msgstr ""
 "Новая заявка, мы скоро возьмем ее в работу.\n"
 "Создана: {created_at} ({tz})"
 
-#: app/handlers/commands.py:66 app/handlers/commands.py:95
+#: app/handlers/commands.py:65 app/handlers/commands.py:96
 msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
@@ -67,7 +67,7 @@ msgstr ""
 "Заявка уже назначена специалисту!\n"
 "Создана: {created_at} ({tz})"
 
-#: app/handlers/commands.py:67 app/handlers/commands.py:96
+#: app/handlers/commands.py:66 app/handlers/commands.py:97
 msgid ""
 "<code>{issue_key}</code>\n"
 "\n"
@@ -79,7 +79,7 @@ msgstr ""
 "Ваша заявка уже в работе!\n"
 "Создана: {created_at} ({tz})"
 
-#: app/handlers/commands.py:83 app/handlers/commands.py:113
+#: app/handlers/commands.py:78 app/handlers/commands.py:109
 msgid ""
 "When issue is complete, you will be notified. Do you want to create a new"
 " one?"
@@ -87,11 +87,11 @@ msgstr ""
 "После выполнения вашей заявки, мы вас оповестим с подробностями. Хотите "
 "создать новую заявку?"
 
-#: app/handlers/commands.py:119
+#: app/handlers/commands.py:83 app/handlers/commands.py:115
 msgid "No issues were found, want to create one?"
 msgstr "Заявки не найдены, хотите создать?"
 
-#: app/handlers/commands.py:130
+#: app/handlers/commands.py:126
 msgid ""
 "Yokozuna Support bot will help you create a support ticket, send it to "
 "our team and receive feedback"
@@ -99,104 +99,135 @@ msgstr ""
 "Бот Yokozuna Support поможет вам создать заявку, отправить ее нашей "
 "команде поддержки и получить обратную связь"
 
-#: app/handlers/create_issue.py:53
+#: app/handlers/create_issue.py:63
 msgid "Thank you! Now describe your problem in details:"
 msgstr "Спасибо! А теперь опишите проблему, с которой столкнулись:"
 
-#: app/handlers/create_issue.py:71
+#: app/handlers/create_issue.py:83
 msgid "The category you entered is incorrect, please press a button below:"
 msgstr ""
 "Выбранная категория некорректна, пожалуйста нажмите подходящую кнопку "
 "ниже:"
 
-#: app/handlers/create_issue.py:82
-msgid "Add up to 3 screenshots (optional):"
-msgstr "Добавьте скриншоты до 3х штук (опционально):"
-
-#: app/handlers/create_issue.py:92
-msgid "You must provide a description:"
-msgstr "Вы должны добавить описание"
-
-#: app/handlers/create_issue.py:110
-msgid "{} of 3 added. Add another screenshot or press Skip"
-msgstr "{} из 3 добавлено. Добавьте еще скриншоты или нажмите Пропустить"
-
-#: app/handlers/create_issue.py:115
-msgid "You uploaded maximum amount of screenshots. Please, share your contact."
+#: app/handlers/create_issue.py:97
+msgid ""
+"Add attachments. You can upload up to 5 attachments (photo or minute "
+"video) or press <b>Skip</b>"
 msgstr ""
-"Вы добавили максимальное количество скриншотов. Пожалуйста поделитесь "
-"вашим контактом."
+"Загрузите вложения. Вы можете прикрепить до 5 вложений (скриншоты или минутные "
+"видео) или нажать <b>Пропустить</b>"
 
-#: app/handlers/create_issue.py:124
-msgid "Please, share your contact"
-msgstr "Пожалуйста, поделитесь контактом"
+#: app/handlers/create_issue.py:108
+msgid "You must provide a description:"
+msgstr "Вы должны добавить описание:"
 
-#: app/handlers/create_issue.py:139
+#: app/handlers/create_issue.py:132
+msgid ""
+"The video is too long. Please upload a video that is 60 seconds or "
+"shorter."
+msgstr ""
+"Видео слишком длинное. Пожалуйста, загрузите видео длиной 60 секунд или "
+"меньше."
+
+#: app/handlers/create_issue.py:143
+msgid "Only photo or video attachments are supported!"
+msgstr "Поддерживаются только скриншоты или видео!"
+
+#: app/handlers/create_issue.py:148
+msgid "{} of 5 added! Add more or press <b>Skip</b>"
+msgstr "{} из 5 добавлено! Прикрепите еще или нажмите <b>Пропустить</b>"
+
+#: app/handlers/create_issue.py:157 app/handlers/create_issue.py:192
+#: app/handlers/create_issue.py:228
 msgid ""
 "Submit your request\n"
 "\n"
 "<b>Category:</b> {category}\n"
 "<b>Description:</b> {description}\n"
-"<b>Screenshots:</b> {number} added\n"
+"<b>Attachments:</b> {number} added\n"
 "<b>Contact:</b> {first_name} {phone_number}"
 msgstr ""
 "Подтвердите ваш запрос\n"
 "\n"
 "<b>Категория</b>: {category}\n"
 "<b>Описание</b>: {description}\n"
-"<b>Скриншоты</b>: {number} добавлено\n"
+"<b>Вложения</b>: {number} добавлено\n"
 "<b>Контакт</b>: {first_name}, {phone_number}"
 
-#: app/handlers/create_issue.py:159
-msgid "You uploded maximum amount of screenshots. Please, share your contact."
-msgstr ""
-"Вы добавили максимальное количество скриншотов. Пожалуйста поделитесь "
-"вашим контактом."
+#: app/handlers/create_issue.py:174
+msgid "You have uploaded all attachments. Please, share your contact."
+msgstr "Вы добавили все возможные вложения. Пожалуйста, поделитесь вашим контактом."
 
-#: app/handlers/create_issue.py:167
+#: app/handlers/create_issue.py:210
+msgid "Please, share your contact"
+msgstr "Пожалуйста, поделитесь контактом"
+
+#: app/handlers/create_issue.py:248
+msgid "You already uploaded attachments. Please, share your contact."
+msgstr "Вы уже загрузили вложения. Пожалуйста, поделитесь контактом."
+
+#: app/handlers/create_issue.py:256
 msgid "Please, share your contact. Click the button below:"
-msgstr "Пожалуйста, поделитесь контактом. Нажмите на кнопку ниже"
+msgstr "Пожалуйста, поделитесь контактом. Нажмите на кнопку ниже:"
 
-#: app/handlers/create_issue.py:213
+#: app/handlers/create_issue.py:303
 msgid ""
-"Your request <code>{issue_key}</code> has been submited. We will help you"
-" as soon as possible!"
+"Your request <code>{issue_key}</code> has been submitted. We will help "
+"you as soon as possible!"
 msgstr ""
 "Ваша заявка с номером <code>{issue_key}</code> отправлена. Мы постараемся"
 " помочь как можно скорее!"
 
-#: app/handlers/create_issue.py:224
+#: app/handlers/create_issue.py:315
 msgid "Something went wrong, try again after few minutes!"
 msgstr "Что-то пошло не так, попробуйте еще раз через несколько минут!"
 
-#: app/handlers/create_issue.py:232
+#: app/handlers/create_issue.py:323
 msgid "Request canceled."
 msgstr "Запрос отменен."
 
-#: app/keyboards/default.py:9
+#: app/keyboards/default.py:10 app/keyboards/default.py:17
 msgid "Create new issue"
 msgstr "Создать новую заявку"
 
-#: app/keyboards/default.py:10
+#: app/keyboards/default.py:11 app/keyboards/default.py:20
 msgid "My issues"
 msgstr "Мои заявки"
 
-#: app/keyboards/default.py:17 app/keyboards/default.py:39
+#: app/keyboards/default.py:27 app/keyboards/default.py:43
 msgid "Cancel"
 msgstr "Отменить"
 
-#: app/keyboards/default.py:18
+#: app/keyboards/default.py:28
 msgid "Submit"
 msgstr "Подтвердить"
 
-#: app/keyboards/default.py:47
+#: app/keyboards/default.py:51
 msgid "Share your contact"
 msgstr "Поделиться контактом"
 
-#: app/keyboards/default.py:54
+#: app/keyboards/default.py:58
 msgid "Skip"
 msgstr "Пропустить"
 
-msgid "Category"
-msgstr "Категория"
+msgid "Category 1"
+msgstr "Категория 1"
+
+msgid "Category 2"
+msgstr "Категория 2"
+
+msgid "Category 3"
+msgstr "Категория 3"
+
+msgid "Category 4"
+msgstr "Категория 4"
+
+msgid "Other"
+msgstr "Другое"
+
+msgid "Uploaded"
+msgstr "Загружено"
+
+msgid "Not uploaded"
+msgstr "Не загружено"
 

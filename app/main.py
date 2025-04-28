@@ -3,7 +3,7 @@ import sqlite3
 from settings import bot, i18n
 from settings import DEFAULT_LOCALE, DEBUG
 from settings import BASE_WEBHOOK_URL, WEB_SERVER_HOST, WEB_SERVER_PORT, WEBHOOK_PATH, JIRA_WEBHOOK_PATH
-from app.handlers import create_issue, commands
+from app.handlers import commands, create_issue
 from app.api.jira_route_handler import jira_issue_update
 from aiogram import Bot, Dispatcher
 from aiogram.utils.i18n import ConstI18nMiddleware, SimpleI18nMiddleware
@@ -54,14 +54,23 @@ def main() -> None:
     DB_FILE = "helpdeskgram.db"
     conn = sqlite3.connect(DB_FILE, isolation_level=None)
     conn.execute('pragma journal_mode=wal')
+    conn.execute('pragma foreign_keys=on')
     cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        chat_id INTEGER,
+        first_name TEXT,
+        phone_number TEXT,
+        locale TEXT,
+        created_at TEXT NOT NULL
+    )''')
     cursor.execute('''CREATE TABLE IF NOT EXISTS issues (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER,
         issue_key TEXT,
         status TEXT,
-        locale TEXT,
-        created_at TEXT NOT NULL
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )''')
     cursor.execute('''CREATE INDEX IF NOT EXISTS idx_user_id ON issues(user_id)''')
     conn.commit()
@@ -74,9 +83,19 @@ def main() -> None:
 if __name__ == "__main__":
 
     # Add logging
+    log_format = "%(asctime)s - %(levelname)s - %(message)s"
+    log_filename = "debug.log"
+
     match DEBUG:
         case True:
-            logging.basicConfig(level=logging.DEBUG)
+            logging.basicConfig(
+                level=logging.DEBUG,
+                format=log_format,
+                handlers=[
+                    logging.FileHandler(log_filename, mode='a'),
+                    logging.StreamHandler()
+                ]
+            )
         case False:
             logging.basicConfig(level=logging.INFO)
     main()

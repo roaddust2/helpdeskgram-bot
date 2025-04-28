@@ -1,4 +1,5 @@
 # TODO: Needs refactoring
+# Use OOP, ABC class, write an andapter for Jira specifically
 import io
 import aiohttp
 from settings import JIRA_HOME, JIRA_USERNAME, JIRA_PASSWORD
@@ -35,12 +36,12 @@ async def get_jira_cookie():
             headers=headers,
             json=json
         ) as response:
-            if response.status == 200:
+            if response.status in {200, 201}:
                 data = await response.json()
                 SESSION_COOKIE = data.get('session')
                 return data
             else:
-                logging.error(f"Failed to get cookie, {response.status} {response.text}")
+                logging.error(f"Failed to get cookie, {response.status} {response.text()}")
                 return None
 
 
@@ -68,21 +69,39 @@ async def create_jira_issue(issue_data: dict):
             headers=headers,
             json={"fields": issue_data}
         ) as response:
-            if response.status == 201:
+            if response.status in {200, 201}:
                 data = await response.json()
                 logging.info(f"Issue created with key {data['key']}.")
                 return data['key']
             elif response.status == 401:
                 logging.error("Unauthorized. Retry...")
-                return await create_jira_issue(issue_data)
+                await get_jira_cookie()
+                if SESSION_COOKIE:
+                    headers.update({'Cookie': f"{SESSION_COOKIE['name']}={SESSION_COOKIE['value']}"})
+                    async with session.post(
+                        url=url,
+                        headers=headers,
+                        json={"fields": issue_data}
+                    ) as retry_response:
+                        if retry_response.status in {200, 201}:
+                            data = await retry_response.json()
+                            logging.info(f"Issue created with key {data['key']} on retry.")
+                            return data['key']
+                        else:
+                            logging.error(f"Retry failed: {retry_response.status} {await retry_response.text()}")
+                            raise JiraFailure
+                else:
+                    logging.error("Re-authentication failed. Cannot create issue.")
+                    raise JiraFailure
             elif response.status == 400:
                 logging.error(f"Input is invalid! {response.status} {await response.text()}")
+                raise JiraFailure
             else:
                 logging.error(f"Failed to create issue! {response.status} {await response.text()}")
                 raise JiraFailure
 
 
-# TODO: Needs refactoring C901
+# TODO: Needs refactoring C901 PEP
 async def upload_jira_issue_attachments(  # noqa C901
     issue_key: str,
     attachments: list[tuple[io.BytesIO, str]],
@@ -126,7 +145,7 @@ async def upload_jira_issue_attachments(  # noqa C901
                 headers=headers,
                 data=form
             ) as response:
-                if response.status == 200:
+                if response.status in {200, 201}:
                     logging.info("Image/s successfully updated.")
                     return await response.json()
                 elif response.status == 401:
@@ -139,14 +158,14 @@ async def upload_jira_issue_attachments(  # noqa C901
                         return None
                 elif response.status == 403:
                     logging.error(
-                        "Attachments are disabled or you don't have "
-                        "permission to add attachments to this issue."
+                        "Attachments are disabled or you don't have permission "
+                        "to add attachments to this issue."
                     )
                     return None
                 elif response.status == 404:
                     logging.error(
-                        f"Issue is not found, the user does not have permission "
-                        f"to view it, or the attachments exceeds the max size.\n{await response.text()}"
+                        f"Issue is not found, the user does not have permission to view it, "
+                        f"or the attachments exceeds the max size.\n{await response.text()}"
                     )
                     return None
                 else:
@@ -175,7 +194,7 @@ async def get_jira_issue_last_comment(issue_key: str) -> str:
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url=url, headers=headers) as response:
-            if response.status == 200:
+            if response.status in {200, 201}:
                 data = await response.json()
                 if data["comments"]:
                     last_comment = max(data["comments"], key=lambda c: c["created"])["body"]

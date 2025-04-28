@@ -1,8 +1,7 @@
 # Python
 __pycache__/
 
-# Django
-*.log
+# DB
 db.sqlite3
 *.db
 
@@ -22,3 +21,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Logs
+*.log
