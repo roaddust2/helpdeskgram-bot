@@ -40,7 +40,6 @@ CATEGORIES = [
     ("Category 2", "category2"),
     ("Category 3", "category3"),
     ("Category 4", "category4"),
-    ("Category 5", "category5"),
     ("Other", "other")
 ]
 

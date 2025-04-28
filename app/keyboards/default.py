@@ -2,12 +2,22 @@ from aiogram import types
 from aiogram.types import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 from aiogram.utils.i18n import gettext as _
+from settings import i18n
 
 
 def create_issue_ikb() -> InlineKeyboardBuilder:
     builder = InlineKeyboardBuilder()
     builder.row(InlineKeyboardButton(text=_("Create new issue"), callback_data="create_new_issue"))
     builder.row(InlineKeyboardButton(text=_("My issues"), callback_data="list"))
+    return builder.as_markup()
+
+
+def create_issue_manual_locale_ikb(locale) -> InlineKeyboardBuilder:
+    builder = InlineKeyboardBuilder()
+    builder.row(InlineKeyboardButton(text=i18n.gettext(
+        "Create new issue",
+        locale=locale), callback_data="create_new_issue"))
+    builder.row(InlineKeyboardButton(text=i18n.gettext("My issues", locale=locale), callback_data="list"))
     return builder.as_markup()
 
 
@@ -25,16 +35,10 @@ def confirm_issue_ikb() -> InlineKeyboardBuilder:
 def choose_category_ikb(buttons: list[tuple[str, str]]) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
 
-    for i in range(0, len(buttons), 2):
-        if i + 1 < len(buttons):
-            builder.row(
-                InlineKeyboardButton(text=_(buttons[i][0]), callback_data=buttons[i][1]),
-                InlineKeyboardButton(text=_(buttons[i + 1][0]), callback_data=buttons[i + 1][1])
-            )
-        else:  # If last element without pair
-            builder.row(
-                InlineKeyboardButton(text=_(buttons[i][0]), callback_data=buttons[i][1])
-            )
+    for button in buttons:
+        builder.row(
+            InlineKeyboardButton(text=_(button[0]), callback_data=button[1])
+        )
     builder.row(
         InlineKeyboardButton(text=_("Cancel"), callback_data="cancel")
     )
